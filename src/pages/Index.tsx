@@ -48,10 +48,10 @@ const Index = () => {
             className="text-center group"
           >
             <h1 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
-              Guia Fácil
+              Tex IA
             </h1>
             <p className="text-muted-foreground font-poppins text-sm mt-1">
-              Simplificando sua jornada ✨
+              @texiaoficialbr
             </p>
           </Link>
         </div>
