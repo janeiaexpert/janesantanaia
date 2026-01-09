@@ -27,6 +27,7 @@ const Admin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
   const [links, setLinks] = useState<LinkItem[]>([]);
   const [linksLoading, setLinksLoading] = useState(false);
 
@@ -107,28 +108,52 @@ const Admin = () => {
     }
   };
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthLoading(true);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        toast({ 
-          title: "Erro no login", 
-          description: error.message,
-          variant: "destructive" 
+      if (isSignUp) {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/admin`,
+          },
         });
+
+        if (error) {
+          toast({ 
+            title: "Erro no cadastro", 
+            description: error.message,
+            variant: "destructive" 
+          });
+        } else {
+          toast({ 
+            title: "Conta criada!", 
+            description: "Agora faça login para continuar." 
+          });
+          setIsSignUp(false);
+        }
       } else {
-        toast({ title: "Login realizado!", description: "Bem-vindo ao painel admin." });
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (error) {
+          toast({ 
+            title: "Erro no login", 
+            description: error.message,
+            variant: "destructive" 
+          });
+        } else {
+          toast({ title: "Login realizado!", description: "Bem-vindo ao painel admin." });
+        }
       }
     } catch (error) {
       toast({ 
-        title: "Erro no login", 
+        title: "Erro", 
         description: "Ocorreu um erro inesperado",
         variant: "destructive" 
       });
@@ -234,10 +259,12 @@ const Admin = () => {
       <main className="min-h-screen bg-background flex items-center justify-center px-4">
         <Card className="w-full max-w-sm">
           <CardHeader className="text-center">
-            <CardTitle className="font-montserrat">Painel Admin</CardTitle>
+            <CardTitle className="font-montserrat">
+              {isSignUp ? "Criar Conta" : "Painel Admin"}
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleLogin} className="space-y-4">
+            <form onSubmit={handleAuth} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -258,10 +285,22 @@ const Admin = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Digite a senha"
                   required
+                  minLength={6}
                 />
               </div>
               <Button type="submit" className="w-full" disabled={authLoading}>
-                {authLoading ? "Entrando..." : "Entrar"}
+                {authLoading 
+                  ? (isSignUp ? "Criando..." : "Entrando...") 
+                  : (isSignUp ? "Criar Conta" : "Entrar")
+                }
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={() => setIsSignUp(!isSignUp)}
+              >
+                {isSignUp ? "Já tenho conta" : "Criar nova conta"}
               </Button>
               <Button
                 type="button"
