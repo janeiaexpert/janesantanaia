@@ -47,7 +47,7 @@ const Index = () => {
         </div>
 
         {/* Links Section */}
-        <nav className="w-full flex flex-col gap-3 mt-4">
+        <nav className="w-full flex flex-col gap-4 mt-6">
           {links.map((link, index) => (
             <div
               key={link.title}
