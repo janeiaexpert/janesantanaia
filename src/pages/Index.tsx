@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Instagram, MessageCircle, BookOpen, Mail, ShoppingBag } from "lucide-react";
-import ProfileAvatar from "@/components/ProfileAvatar";
 import LinkButton from "@/components/LinkButton";
 
 const links = [
