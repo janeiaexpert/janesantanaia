@@ -733,7 +733,7 @@ const Admin = () => {
                   <CardHeader>
                     <CardTitle className="text-base">Tipografia</CardTitle>
                   </CardHeader>
-                  <CardContent className="grid grid-cols-2 gap-4">
+                  <CardContent className="grid grid-cols-2 gap-6">
                     {[
                       { key: "font_heading" as const, label: "Fonte dos Títulos" },
                       { key: "font_body" as const, label: "Fonte do Corpo" },
