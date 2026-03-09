@@ -738,25 +738,25 @@ const Admin = () => {
                   <CardHeader>
                     <CardTitle className="text-base">Tipografia</CardTitle>
                   </CardHeader>
-                  <CardContent className="grid grid-cols-2 gap-6">
+                  <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {[
                       { key: "font_heading" as const, label: "Fonte dos Títulos" },
                       { key: "font_body" as const, label: "Fonte do Corpo" },
                     ].map(({ key, label }) => (
-                      <div key={key} className="space-y-1">
-                        <Label className="text-xs">{label}</Label>
-                        <div className="flex flex-col gap-2 mt-1">
+                      <div key={key} className="space-y-3">
+                        <Label className="text-sm font-semibold">{label}</Label>
+                        <div className="flex flex-col gap-3">
                           {FONT_OPTIONS.map((opt) => (
-                            <label key={opt.value} className="flex items-center gap-2 cursor-pointer">
+                            <label key={opt.value} className="flex items-center gap-3 cursor-pointer py-1">
                               <input
                                 type="radio"
                                 name={key}
                                 value={opt.value}
                                 checked={settings[key] === opt.value}
                                 onChange={() => updateSetting(key, opt.value)}
-                                className="accent-primary"
+                                className="accent-primary w-4 h-4"
                               />
-                              <span className={`text-sm ${opt.value}`}>{opt.label}</span>
+                              <span className={`text-base ${opt.value}`}>{opt.label}</span>
                             </label>
                           ))}
                         </div>
