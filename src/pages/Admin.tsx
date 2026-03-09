@@ -59,6 +59,7 @@ const Admin = () => {
   const [settings, setSettings] = useState<SiteSettings | null>(null);
   const [settingsLoading, setSettingsLoading] = useState(false);
   const [settingsSaving, setSettingsSaving] = useState(false);
+  const [avatarUploading, setAvatarUploading] = useState(false);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -290,6 +291,75 @@ const Admin = () => {
       toast({ title: "Erro ao salvar configurações", variant: "destructive" });
     } finally {
       setSettingsSaving(false);
+    }
+  };
+
+  const uploadAvatar = async (file: File) => {
+    if (!settings) return;
+
+    if (!file.type.startsWith("image/")) {
+      toast({ title: "Arquivo inválido", description: "Envie uma imagem (PNG, JPG, WEBP...)", variant: "destructive" });
+      return;
+    }
+
+    const maxBytes = 5 * 1024 * 1024;
+    if (file.size > maxBytes) {
+      toast({ title: "Imagem muito grande", description: "Tamanho máximo: 5MB", variant: "destructive" });
+      return;
+    }
+
+    setAvatarUploading(true);
+    try {
+      const fileExt = (file.name.split(".").pop() || "png").toLowerCase();
+      const filePath = `site/${settings.id}/avatar-${Date.now()}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("avatars")
+        .upload(filePath, file, {
+          contentType: file.type,
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
+      const publicUrl = data.publicUrl;
+
+      const { error: updateError } = await supabase
+        .from("site_settings")
+        .update({ avatar_url: publicUrl })
+        .eq("id", settings.id);
+
+      if (updateError) throw updateError;
+
+      updateSetting("avatar_url", publicUrl);
+      toast({ title: "Avatar atualizado!" });
+    } catch (error: any) {
+      console.error("Error uploading avatar:", error);
+      toast({ title: "Erro no upload", description: error?.message ?? "Tente novamente", variant: "destructive" });
+    } finally {
+      setAvatarUploading(false);
+    }
+  };
+
+  const removeAvatar = async () => {
+    if (!settings) return;
+    setAvatarUploading(true);
+    try {
+      const { error } = await supabase
+        .from("site_settings")
+        .update({ avatar_url: null })
+        .eq("id", settings.id);
+      if (error) throw error;
+
+      updateSetting("avatar_url", null);
+      toast({ title: "Avatar removido" });
+    } catch (error: any) {
+      console.error("Error removing avatar:", error);
+      toast({ title: "Erro ao remover avatar", description: error?.message ?? "Tente novamente", variant: "destructive" });
+    } finally {
+      setAvatarUploading(false);
     }
   };
 
@@ -577,23 +647,46 @@ const Admin = () => {
                       />
                     </div>
                     <div className="space-y-1">
-                      <Label>URL do Avatar</Label>
-                      <Input
-                        value={settings.avatar_url ?? ""}
-                        onChange={(e) => updateSetting("avatar_url", e.target.value || null)}
-                        placeholder="https://exemplo.com/minha-foto.jpg"
-                      />
-                      {settings.avatar_url && (
-                        <div className="mt-2 flex items-center gap-3">
-                          <img
-                            src={settings.avatar_url}
-                            alt="Preview do avatar"
-                            className="w-12 h-12 rounded-full object-cover border border-border"
-                            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-                          />
-                          <span className="text-xs text-muted-foreground">Preview do avatar</span>
+                      <Label>Avatar (upload)</Label>
+                      <div className="flex flex-col gap-3">
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          disabled={avatarUploading}
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) uploadAvatar(file);
+                            e.currentTarget.value = "";
+                          }}
+                        />
+
+                        <div className="flex items-center gap-3">
+                          {settings.avatar_url ? (
+                            <img
+                              src={settings.avatar_url}
+                              alt="Preview do avatar"
+                              className="w-12 h-12 rounded-full object-cover border border-border"
+                              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                            />
+                          ) : (
+                            <div className="w-12 h-12 rounded-full border border-border bg-muted" />
+                          )}
+                          <div className="flex-1">
+                            <p className="text-xs text-muted-foreground">
+                              {avatarUploading ? "Enviando..." : "PNG/JPG/WEBP • até 5MB"}
+                            </p>
+                          </div>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={removeAvatar}
+                            disabled={!settings.avatar_url || avatarUploading}
+                          >
+                            Remover
+                          </Button>
                         </div>
-                      )}
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
