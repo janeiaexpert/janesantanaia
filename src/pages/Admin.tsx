@@ -28,6 +28,7 @@ const Admin = () => {
   const [password, setPassword] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [links, setLinks] = useState<LinkItem[]>([]);
   const [linksLoading, setLinksLoading] = useState(false);
 
