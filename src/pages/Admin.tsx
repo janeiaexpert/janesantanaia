@@ -531,8 +531,8 @@ const Admin = () => {
             <h1 className="text-2xl font-montserrat font-bold">Painel Admin</h1>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="icon" onClick={handleLogout} title="Sair">
-              <LogOut className="w-4 h-4" />
+            <Button variant="outline" size="sm" onClick={handleLogout}>
+              Sair
             </Button>
             <Button variant="outline" onClick={() => navigate("/")}>
               <Eye className="w-4 h-4 mr-2" />
