@@ -4,73 +4,71 @@
 
 @layer base {
   :root {
-    --background: 30 50% 98%;
-    --foreground: 15 30% 25%;
+    --background: 0 0% 98%;
+    --foreground: 25 15% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 15 30% 25%;
+    --card-foreground: 25 15% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 15 30% 25%;
+    --popover-foreground: 25 15% 20%;
 
-    --primary: 10 50% 65%;
+    --primary: 35 45% 25%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 38 35% 75%;
-    --secondary-foreground: 15 30% 25%;
+    --secondary: 25 10% 85%;
+    --secondary-foreground: 25 15% 20%;
 
-    --muted: 30 30% 95%;
-    --muted-foreground: 15 20% 45%;
+    --muted: 0 0% 95%;
+    --muted-foreground: 25 10% 45%;
 
-    --accent: 38 35% 75%;
-    --accent-foreground: 15 30% 25%;
+    --accent: 35 25% 60%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 38 30% 85%;
-    --input: 38 30% 85%;
-    --ring: 10 50% 65%;
+    --border: 25 10% 85%;
+    --input: 25 10% 85%;
+    --ring: 35 45% 25%;
 
     --radius: 1rem;
 
     /* Custom colors */
-    --coral: 10 50% 65%;
-    --coral-light: 10 45% 75%;
-    --beige: 38 35% 75%;
-    --beige-light: 38 30% 88%;
-    --cream: 30 50% 98%;
-    --brown: 15 30% 25%;
+    --brown: 25 15% 20%;
+    --brown-light: 35 25% 60%;
+    --gold: 35 45% 45%;
+    --gold-light: 35 35% 65%;
   }
 
   .dark {
-    --background: 15 30% 10%;
-    --foreground: 30 30% 95%;
+    --background: 25 15% 8%;
+    --foreground: 0 0% 95%;
 
-    --card: 15 25% 15%;
-    --card-foreground: 30 30% 95%;
+    --card: 25 10% 12%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 15 25% 15%;
-    --popover-foreground: 30 30% 95%;
+    --popover: 25 10% 12%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 10 50% 65%;
+    --primary: 35 45% 35%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 38 30% 30%;
-    --secondary-foreground: 30 30% 95%;
+    --secondary: 25 10% 20%;
+    --secondary-foreground: 0 0% 95%;
 
-    --muted: 15 20% 20%;
-    --muted-foreground: 30 20% 65%;
+    --muted: 25 10% 15%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 38 30% 30%;
-    --accent-foreground: 30 30% 95%;
+    --accent: 35 25% 40%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 15 20% 25%;
-    --input: 15 20% 25%;
-    --ring: 10 50% 65%;
+    --border: 25 10% 18%;
+    --input: 25 10% 18%;
+    --ring: 35 45% 35%;
   }
 }
 
@@ -80,26 +78,22 @@
   }
 
   body {
-    @apply bg-background text-foreground font-inter antialiased;
+    @apply bg-background text-foreground font-sans antialiased;
   }
 
-  h1, h2, h3 {
-    @apply font-montserrat;
-  }
-
-  h4, h5, h6 {
-    @apply font-poppins;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-semibold text-brown;
   }
 }
 
 @layer utilities {
   .link-card {
-    @apply w-full py-4 px-6 bg-card rounded-2xl border border-border shadow-sm 
-           hover:shadow-md hover:border-primary/30 hover:-translate-y-0.5
-           transition-all duration-300 ease-out text-center font-poppins font-medium;
+    @apply w-full py-4 px-6 bg-card rounded-xl border border-border shadow-sm 
+           hover:shadow-lg hover:border-primary/40 hover:-translate-y-1
+           transition-all duration-300 ease-out text-center font-sans font-medium;
   }
 
   .profile-ring {
-    @apply rounded-full p-1 bg-gradient-to-br from-secondary to-primary;
+    @apply rounded-full p-1 bg-gradient-to-br from-gold-light to-brown;
   }
 }

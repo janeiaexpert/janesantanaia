@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Instagram, MessageCircle, BookOpen, Mail, ShoppingBag } from "lucide-react";
-import ProfileAvatar from "@/components/ProfileAvatar";
 import LinkButton from "@/components/LinkButton";
 
 const links = [
@@ -35,29 +34,20 @@ const Index = () => {
   return (
     <main className="min-h-screen bg-background flex flex-col items-center px-4 py-12">
       <div className="w-full max-w-md flex flex-col items-center gap-6">
-        {/* Profile Section */}
+        {/* Brand Section */}
         <div 
-          className="flex flex-col items-center gap-4 animate-scale-in"
+          className="flex flex-col items-center gap-4 animate-scale-in mb-8"
         >
-          <Link to="#" className="group">
-            <ProfileAvatar />
-          </Link>
-          
-          <Link 
-            to="#"
-            className="text-center group"
-          >
-            <h1 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
-              Tex IA
-            </h1>
-            <p className="text-muted-foreground font-poppins text-sm mt-1">
-              @texiaoficialbr
-            </p>
-          </Link>
+          <h1 className="text-3xl font-bold text-center text-foreground">
+            Link Tree
+          </h1>
+          <p className="text-muted-foreground text-center text-sm">
+            Todos os seus links em um só lugar
+          </p>
         </div>
 
         {/* Links Section */}
-        <nav className="w-full flex flex-col gap-3 mt-4">
+        <nav className="w-full flex flex-col gap-4 mt-6">
           {links.map((link, index) => (
             <div
               key={link.title}
@@ -71,8 +61,8 @@ const Index = () => {
 
         {/* Footer */}
         <footer className="mt-12 text-center">
-          <p className="text-xs text-muted-foreground font-inter">
-            © 2025 Tex IA • Todos os direitos reservados
+          <p className="text-xs text-muted-foreground">
+            © 2025 Link Tree • Todos os direitos reservados
           </p>
           <Link 
             to="/admin" 
