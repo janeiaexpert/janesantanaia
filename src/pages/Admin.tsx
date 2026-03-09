@@ -28,6 +28,7 @@ const Admin = () => {
   const [password, setPassword] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [links, setLinks] = useState<LinkItem[]>([]);
   const [linksLoading, setLinksLoading] = useState(false);
 
@@ -113,7 +114,25 @@ const Admin = () => {
     setAuthLoading(true);
 
     try {
-      if (isSignUp) {
+      if (isForgotPassword) {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/reset-password`,
+        });
+
+        if (error) {
+          toast({ 
+            title: "Erro", 
+            description: error.message,
+            variant: "destructive" 
+          });
+        } else {
+          toast({ 
+            title: "Email enviado!", 
+            description: "Verifique seu email para redefinir a senha." 
+          });
+          setIsForgotPassword(false);
+        }
+      } else if (isSignUp) {
         const { error } = await supabase.auth.signUp({
           email,
           password,
@@ -131,7 +150,7 @@ const Admin = () => {
         } else {
           toast({ 
             title: "Conta criada!", 
-            description: "Agora faça login para continuar." 
+            description: "Verifique seu email para confirmar a conta." 
           });
           setIsSignUp(false);
         }
@@ -260,7 +279,7 @@ const Admin = () => {
         <Card className="w-full max-w-sm">
           <CardHeader className="text-center">
             <CardTitle className="font-montserrat">
-              {isSignUp ? "Criar Conta" : "Painel Admin"}
+              {isForgotPassword ? "Recuperar Senha" : (isSignUp ? "Criar Conta" : "Painel Admin")}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -276,31 +295,49 @@ const Admin = () => {
                   required
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Senha</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Digite a senha"
-                  required
-                  minLength={6}
-                />
-              </div>
+              {!isForgotPassword && (
+                <div className="space-y-2">
+                  <Label htmlFor="password">Senha</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Digite a senha"
+                    required
+                    minLength={6}
+                  />
+                </div>
+              )}
               <Button type="submit" className="w-full" disabled={authLoading}>
                 {authLoading 
-                  ? (isSignUp ? "Criando..." : "Entrando...") 
-                  : (isSignUp ? "Criar Conta" : "Entrar")
+                  ? (isForgotPassword ? "Enviando..." : (isSignUp ? "Criando..." : "Entrando..."))
+                  : (isForgotPassword ? "Enviar Email" : (isSignUp ? "Criar Conta" : "Entrar"))
                 }
               </Button>
+              {!isForgotPassword && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => {
+                    setIsSignUp(!isSignUp);
+                    setIsForgotPassword(false);
+                  }}
+                >
+                  {isSignUp ? "Já tenho conta" : "Criar nova conta"}
+                </Button>
+              )}
               <Button
                 type="button"
-                variant="outline"
-                className="w-full"
-                onClick={() => setIsSignUp(!isSignUp)}
+                variant="ghost"
+                className="w-full text-sm"
+                onClick={() => {
+                  setIsForgotPassword(!isForgotPassword);
+                  setIsSignUp(false);
+                }}
               >
-                {isSignUp ? "Já tenho conta" : "Criar nova conta"}
+                {isForgotPassword ? "Voltar ao login" : "Esqueci minha senha"}
               </Button>
               <Button
                 type="button"
