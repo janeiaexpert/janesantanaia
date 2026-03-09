@@ -740,7 +740,7 @@ const Admin = () => {
                     ].map(({ key, label }) => (
                       <div key={key} className="space-y-1">
                         <Label className="text-xs">{label}</Label>
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-2 mt-1">
                           {FONT_OPTIONS.map((opt) => (
                             <label key={opt.value} className="flex items-center gap-2 cursor-pointer">
                               <input
