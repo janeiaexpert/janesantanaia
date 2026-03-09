@@ -61,8 +61,8 @@ const Index = () => {
 
         {/* Footer */}
         <footer className="mt-12 text-center">
-          <p className="text-xs text-muted-foreground font-inter">
-            © 2025 Tex IA • Todos os direitos reservados
+          <p className="text-xs text-muted-foreground">
+            © 2025 Link Tree • Todos os direitos reservados
           </p>
           <Link 
             to="/admin" 
