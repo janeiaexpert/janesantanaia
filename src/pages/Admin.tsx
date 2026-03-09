@@ -114,7 +114,25 @@ const Admin = () => {
     setAuthLoading(true);
 
     try {
-      if (isSignUp) {
+      if (isForgotPassword) {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/reset-password`,
+        });
+
+        if (error) {
+          toast({ 
+            title: "Erro", 
+            description: error.message,
+            variant: "destructive" 
+          });
+        } else {
+          toast({ 
+            title: "Email enviado!", 
+            description: "Verifique seu email para redefinir a senha." 
+          });
+          setIsForgotPassword(false);
+        }
+      } else if (isSignUp) {
         const { error } = await supabase.auth.signUp({
           email,
           password,
@@ -132,7 +150,7 @@ const Admin = () => {
         } else {
           toast({ 
             title: "Conta criada!", 
-            description: "Agora faça login para continuar." 
+            description: "Verifique seu email para confirmar a conta." 
           });
           setIsSignUp(false);
         }
