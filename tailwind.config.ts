@@ -17,6 +17,11 @@ export default {
         montserrat: ["Montserrat", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
         inter: ["Inter", "sans-serif"],
+        playfair: ["Playfair Display", "serif"],
+        raleway: ["Raleway", "sans-serif"],
+        nunito: ["Nunito", "sans-serif"],
+        outfit: ["Outfit", "sans-serif"],
+        "dm-sans": ["DM Sans", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

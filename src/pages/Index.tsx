@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import LinkButton from "@/components/LinkButton";
+import ProfileAvatar from "@/components/ProfileAvatar";
 import { supabase } from "@/integrations/supabase/client";
 
 interface LinkItem {
@@ -58,7 +59,6 @@ const Index = () => {
     root.style.setProperty("--card-foreground", settings.color_text);
     root.style.setProperty("--secondary", settings.color_secondary);
     return () => {
-      // Reset on unmount
       root.style.removeProperty("--primary");
       root.style.removeProperty("--background");
       root.style.removeProperty("--foreground");
@@ -75,33 +75,33 @@ const Index = () => {
     );
   }
 
+  const headingFont = settings?.font_heading ?? "font-montserrat";
+  const bodyFont = settings?.font_body ?? "font-poppins";
+
   return (
-    <main className="min-h-screen bg-background flex flex-col items-center px-4 py-12">
-      <div className="w-full max-w-md flex flex-col items-center gap-6">
+    <main className="min-h-screen bg-background flex flex-col items-center px-6 py-16">
+      <div className="w-full max-w-lg flex flex-col items-center gap-8">
         {/* Brand Section */}
-        <div className="flex flex-col items-center gap-4 animate-scale-in mb-8">
-          {settings?.avatar_url && (
-            <img
-              src={settings.avatar_url}
-              alt={settings.site_title}
-              className="w-20 h-20 rounded-full object-cover border-2 border-primary/30 shadow-md"
-              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-            />
-          )}
-          <h1 className={`text-3xl font-bold text-center text-foreground ${settings?.font_heading ?? ""}`}>
+        <div className="flex flex-col items-center gap-5 animate-scale-in">
+          <ProfileAvatar size="lg" />
+
+          <h1 className={`text-4xl md:text-5xl font-bold text-center text-foreground tracking-tight ${headingFont}`}>
             {settings?.site_title ?? "Link Tree"}
           </h1>
+
           {settings?.site_bio && (
-            <p className={`text-muted-foreground text-center text-sm ${settings?.font_body ?? ""}`}>
+            <p className={`text-muted-foreground text-center text-base md:text-lg leading-relaxed max-w-sm ${bodyFont}`}>
               {settings.site_bio}
             </p>
           )}
         </div>
 
         {/* Links Section */}
-        <nav className="w-full flex flex-col gap-4 mt-6">
+        <nav className="w-full flex flex-col gap-4 mt-4">
           {links.length === 0 ? (
-            <p className="text-center text-muted-foreground text-sm">Nenhum link disponível.</p>
+            <p className={`text-center text-muted-foreground text-base ${bodyFont}`}>
+              Nenhum link disponível.
+            </p>
           ) : (
             links.map((link, index) => (
               <div
@@ -116,13 +116,13 @@ const Index = () => {
         </nav>
 
         {/* Footer */}
-        <footer className="mt-12 text-center">
-          <p className="text-xs text-muted-foreground">
+        <footer className="mt-16 text-center space-y-2">
+          <p className={`text-sm text-muted-foreground ${bodyFont}`}>
             © {new Date().getFullYear()} {settings?.site_title ?? "Link Tree"} • Todos os direitos reservados
           </p>
           <Link
             to="/admin"
-            className="text-xs text-muted-foreground/50 hover:text-primary transition-colors mt-2 inline-block"
+            className="text-xs text-muted-foreground/40 hover:text-primary transition-colors inline-block"
           >
             Admin
           </Link>

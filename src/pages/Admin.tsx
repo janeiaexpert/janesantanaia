@@ -34,9 +34,14 @@ interface SiteSettings {
 }
 
 const FONT_OPTIONS = [
-  { label: "Sans-serif", value: "font-sans" },
-  { label: "Serif", value: "font-serif" },
-  { label: "Mono", value: "font-mono" },
+  { label: "Montserrat", value: "font-montserrat" },
+  { label: "Poppins", value: "font-poppins" },
+  { label: "Inter", value: "font-inter" },
+  { label: "Playfair Display", value: "font-playfair" },
+  { label: "Raleway", value: "font-raleway" },
+  { label: "Nunito", value: "font-nunito" },
+  { label: "Outfit", value: "font-outfit" },
+  { label: "DM Sans", value: "font-dm-sans" },
 ];
 
 const Admin = () => {
