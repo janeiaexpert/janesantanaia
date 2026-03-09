@@ -294,6 +294,75 @@ const Admin = () => {
     }
   };
 
+  const uploadAvatar = async (file: File) => {
+    if (!settings) return;
+
+    if (!file.type.startsWith("image/")) {
+      toast({ title: "Arquivo inválido", description: "Envie uma imagem (PNG, JPG, WEBP...)", variant: "destructive" });
+      return;
+    }
+
+    const maxBytes = 5 * 1024 * 1024;
+    if (file.size > maxBytes) {
+      toast({ title: "Imagem muito grande", description: "Tamanho máximo: 5MB", variant: "destructive" });
+      return;
+    }
+
+    setAvatarUploading(true);
+    try {
+      const fileExt = (file.name.split(".").pop() || "png").toLowerCase();
+      const filePath = `site/${settings.id}/avatar-${Date.now()}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("avatars")
+        .upload(filePath, file, {
+          contentType: file.type,
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
+      const publicUrl = data.publicUrl;
+
+      const { error: updateError } = await supabase
+        .from("site_settings")
+        .update({ avatar_url: publicUrl })
+        .eq("id", settings.id);
+
+      if (updateError) throw updateError;
+
+      updateSetting("avatar_url", publicUrl);
+      toast({ title: "Avatar atualizado!" });
+    } catch (error: any) {
+      console.error("Error uploading avatar:", error);
+      toast({ title: "Erro no upload", description: error?.message ?? "Tente novamente", variant: "destructive" });
+    } finally {
+      setAvatarUploading(false);
+    }
+  };
+
+  const removeAvatar = async () => {
+    if (!settings) return;
+    setAvatarUploading(true);
+    try {
+      const { error } = await supabase
+        .from("site_settings")
+        .update({ avatar_url: null })
+        .eq("id", settings.id);
+      if (error) throw error;
+
+      updateSetting("avatar_url", null);
+      toast({ title: "Avatar removido" });
+    } catch (error: any) {
+      console.error("Error removing avatar:", error);
+      toast({ title: "Erro ao remover avatar", description: error?.message ?? "Tente novamente", variant: "destructive" });
+    } finally {
+      setAvatarUploading(false);
+    }
+  };
+
   // --- Color helper: hsl string -> hex for input[type=color] ---
   const hslToHex = (hsl: string): string => {
     try {
