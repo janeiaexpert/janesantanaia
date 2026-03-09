@@ -531,8 +531,8 @@ const Admin = () => {
             <h1 className="text-2xl font-montserrat font-bold">Painel Admin</h1>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="icon" onClick={handleLogout} title="Sair">
-              <LogOut className="w-4 h-4" />
+            <Button variant="outline" size="sm" onClick={handleLogout}>
+              Sair
             </Button>
             <Button variant="outline" onClick={() => navigate("/")}>
               <Eye className="w-4 h-4 mr-2" />
@@ -733,14 +733,14 @@ const Admin = () => {
                   <CardHeader>
                     <CardTitle className="text-base">Tipografia</CardTitle>
                   </CardHeader>
-                  <CardContent className="grid grid-cols-2 gap-4">
+                  <CardContent className="grid grid-cols-2 gap-6">
                     {[
                       { key: "font_heading" as const, label: "Fonte dos Títulos" },
                       { key: "font_body" as const, label: "Fonte do Corpo" },
                     ].map(({ key, label }) => (
                       <div key={key} className="space-y-1">
                         <Label className="text-xs">{label}</Label>
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-2 mt-1">
                           {FONT_OPTIONS.map((opt) => (
                             <label key={opt.value} className="flex items-center gap-2 cursor-pointer">
                               <input
