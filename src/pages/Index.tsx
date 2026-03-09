@@ -34,25 +34,16 @@ const Index = () => {
   return (
     <main className="min-h-screen bg-background flex flex-col items-center px-4 py-12">
       <div className="w-full max-w-md flex flex-col items-center gap-6">
-        {/* Profile Section */}
+        {/* Brand Section */}
         <div 
-          className="flex flex-col items-center gap-4 animate-scale-in"
+          className="flex flex-col items-center gap-4 animate-scale-in mb-8"
         >
-          <Link to="#" className="group">
-            <ProfileAvatar />
-          </Link>
-          
-          <Link 
-            to="#"
-            className="text-center group"
-          >
-            <h1 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
-              Tex IA
-            </h1>
-            <p className="text-muted-foreground font-poppins text-sm mt-1">
-              @texiaoficialbr
-            </p>
-          </Link>
+          <h1 className="text-3xl font-bold text-center text-foreground">
+            Link Tree
+          </h1>
+          <p className="text-muted-foreground text-center text-sm">
+            Todos os seus links em um só lugar
+          </p>
         </div>
 
         {/* Links Section */}
