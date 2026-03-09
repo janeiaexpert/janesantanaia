@@ -47,6 +47,51 @@ export type Database = {
         }
         Relationships: []
       }
+      site_settings: {
+        Row: {
+          avatar_url: string | null
+          color_background: string
+          color_primary: string
+          color_secondary: string
+          color_text: string
+          created_at: string
+          font_body: string
+          font_heading: string
+          id: string
+          site_bio: string | null
+          site_title: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          color_background?: string
+          color_primary?: string
+          color_secondary?: string
+          color_text?: string
+          created_at?: string
+          font_body?: string
+          font_heading?: string
+          id?: string
+          site_bio?: string | null
+          site_title?: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          color_background?: string
+          color_primary?: string
+          color_secondary?: string
+          color_text?: string
+          created_at?: string
+          font_body?: string
+          font_heading?: string
+          id?: string
+          site_bio?: string | null
+          site_title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

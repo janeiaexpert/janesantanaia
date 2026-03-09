@@ -279,7 +279,7 @@ const Admin = () => {
         <Card className="w-full max-w-sm">
           <CardHeader className="text-center">
             <CardTitle className="font-montserrat">
-              {isSignUp ? "Criar Conta" : "Painel Admin"}
+              {isForgotPassword ? "Recuperar Senha" : (isSignUp ? "Criar Conta" : "Painel Admin")}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -295,31 +295,49 @@ const Admin = () => {
                   required
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Senha</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Digite a senha"
-                  required
-                  minLength={6}
-                />
-              </div>
+              {!isForgotPassword && (
+                <div className="space-y-2">
+                  <Label htmlFor="password">Senha</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Digite a senha"
+                    required
+                    minLength={6}
+                  />
+                </div>
+              )}
               <Button type="submit" className="w-full" disabled={authLoading}>
                 {authLoading 
-                  ? (isSignUp ? "Criando..." : "Entrando...") 
-                  : (isSignUp ? "Criar Conta" : "Entrar")
+                  ? (isForgotPassword ? "Enviando..." : (isSignUp ? "Criando..." : "Entrando..."))
+                  : (isForgotPassword ? "Enviar Email" : (isSignUp ? "Criar Conta" : "Entrar"))
                 }
               </Button>
+              {!isForgotPassword && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => {
+                    setIsSignUp(!isSignUp);
+                    setIsForgotPassword(false);
+                  }}
+                >
+                  {isSignUp ? "Já tenho conta" : "Criar nova conta"}
+                </Button>
+              )}
               <Button
                 type="button"
-                variant="outline"
-                className="w-full"
-                onClick={() => setIsSignUp(!isSignUp)}
+                variant="ghost"
+                className="w-full text-sm"
+                onClick={() => {
+                  setIsForgotPassword(!isForgotPassword);
+                  setIsSignUp(false);
+                }}
               >
-                {isSignUp ? "Já tenho conta" : "Criar nova conta"}
+                {isForgotPassword ? "Voltar ao login" : "Esqueci minha senha"}
               </Button>
               <Button
                 type="button"
