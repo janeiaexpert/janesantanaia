@@ -67,7 +67,8 @@ const Admin = () => {
         setSession(session);
         setUser(session?.user ?? null);
         if (session?.user) {
-          setTimeout(() => checkAdminRole(session.user.id), 0);
+          setLoading(true);
+          checkAdminRole(session.user.id);
         } else {
           setIsAdmin(false);
           setLoading(false);
