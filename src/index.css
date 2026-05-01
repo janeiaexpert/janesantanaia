@@ -4,41 +4,41 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 25 15% 20%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
 
     --card: 0 0% 100%;
-    --card-foreground: 25 15% 20%;
+    --card-foreground: 0 0% 8%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 25 15% 20%;
+    --popover-foreground: 0 0% 8%;
 
-    --primary: 35 45% 25%;
+    --primary: 25 35% 22%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 25 10% 85%;
-    --secondary-foreground: 25 15% 20%;
+    --secondary: 25 15% 92%;
+    --secondary-foreground: 0 0% 8%;
 
-    --muted: 0 0% 95%;
-    --muted-foreground: 25 10% 45%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 25 8% 40%;
 
-    --accent: 35 25% 60%;
+    --accent: 25 25% 35%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 25 10% 85%;
-    --input: 25 10% 85%;
-    --ring: 35 45% 25%;
+    --border: 25 10% 88%;
+    --input: 25 10% 88%;
+    --ring: 25 35% 22%;
 
     --radius: 1rem;
 
     /* Custom colors */
-    --brown: 25 15% 20%;
-    --brown-light: 35 25% 60%;
-    --gold: 35 45% 45%;
-    --gold-light: 35 35% 65%;
+    --brown: 25 35% 22%;
+    --brown-light: 25 20% 45%;
+    --gold: 25 35% 22%;
+    --gold-light: 25 20% 45%;
   }
 
   .dark {
@@ -78,22 +78,24 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground antialiased;
+    font-family: Arial, Helvetica, sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-sans font-semibold text-brown;
+    @apply font-semibold text-foreground;
+    font-family: 'Playfair Display', Georgia, serif;
   }
 }
 
 @layer utilities {
   .link-card {
-    @apply w-full py-5 px-8 bg-card rounded-xl border border-border shadow-sm 
-           hover:shadow-lg hover:border-primary/40 hover:-translate-y-1
+    @apply w-full py-5 px-8 bg-card rounded-xl border border-border shadow-sm
+           hover:shadow-lg hover:border-primary/50 hover:-translate-y-0.5
            transition-all duration-300 ease-out text-center font-medium text-base;
   }
 
   .profile-ring {
-    @apply rounded-full p-1 bg-gradient-to-br from-gold-light to-brown;
+    @apply rounded-full p-1 bg-foreground;
   }
 }
