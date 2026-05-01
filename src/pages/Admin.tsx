@@ -34,10 +34,12 @@ interface SiteSettings {
 }
 
 const FONT_OPTIONS = [
+  { label: "Arial (Sans-serif)", value: "font-arial" },
+  { label: "Playfair Display (Serifada)", value: "font-playfair" },
+  { label: "Georgia (Serifada)", value: "font-georgia" },
   { label: "Montserrat", value: "font-montserrat" },
   { label: "Poppins", value: "font-poppins" },
   { label: "Inter", value: "font-inter" },
-  { label: "Playfair Display", value: "font-playfair" },
   { label: "Raleway", value: "font-raleway" },
   { label: "Nunito", value: "font-nunito" },
   { label: "Outfit", value: "font-outfit" },
