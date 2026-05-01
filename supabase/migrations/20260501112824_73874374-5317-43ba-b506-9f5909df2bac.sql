@@ -1,0 +1,1 @@
+UPDATE public.site_settings SET font_heading='font-playfair', font_body='font-arial', color_primary='25 35% 22%', color_secondary='25 15% 92%', color_background='0 0% 100%', color_text='0 0% 8%' WHERE id='46ee51da-a53c-4866-b9fe-97343f2f7552';
