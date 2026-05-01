@@ -75,8 +75,8 @@ const Index = () => {
     );
   }
 
-  const headingFont = settings?.font_heading ?? "font-montserrat";
-  const bodyFont = settings?.font_body ?? "font-poppins";
+  const headingFont = settings?.font_heading ?? "font-playfair";
+  const bodyFont = settings?.font_body ?? "font-arial";
 
   return (
     <main className="min-h-screen bg-background flex flex-col items-center px-6 py-16">
