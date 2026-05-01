@@ -96,6 +96,6 @@
   }
 
   .profile-ring {
-    @apply rounded-full p-1 bg-foreground;
+    @apply rounded-full p-1 bg-background ring-2 ring-primary/30;
   }
 }
