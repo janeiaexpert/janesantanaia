@@ -98,11 +98,13 @@ const Index = () => {
 
         {/* Links Section */}
         <nav className="w-full flex flex-col gap-4 mt-4">
-          {links.length === 0 ? (
-            <p className={`text-center text-muted-foreground text-base ${bodyFont}`}>
-              Nenhum link disponível.
-            </p>
-          ) : (
+          <Link
+            to="/agenda"
+            className={`w-full text-center bg-primary text-primary-foreground rounded-full py-4 px-6 font-semibold shadow-lg hover:opacity-90 transition-opacity ${bodyFont}`}
+          >
+            📅 Agendar Consulta
+          </Link>
+          {links.length === 0 ? null : (
             links.map((link, index) => (
               <div
                 key={link.id}
