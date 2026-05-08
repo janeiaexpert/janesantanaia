@@ -14,6 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
+      appointments: {
+        Row: {
+          appointment_date: string
+          appointment_time: string
+          client_email: string | null
+          client_name: string
+          client_phone: string
+          created_at: string
+          id: string
+          notes: string | null
+          status: Database["public"]["Enums"]["appointment_status"]
+          updated_at: string
+        }
+        Insert: {
+          appointment_date: string
+          appointment_time: string
+          client_email?: string | null
+          client_name: string
+          client_phone: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          status?: Database["public"]["Enums"]["appointment_status"]
+          updated_at?: string
+        }
+        Update: {
+          appointment_date?: string
+          appointment_time?: string
+          client_email?: string | null
+          client_name?: string
+          client_phone?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          status?: Database["public"]["Enums"]["appointment_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      business_settings: {
+        Row: {
+          closing_time: string
+          created_at: string
+          id: string
+          opening_time: string
+          slot_duration_minutes: number
+          updated_at: string
+          whatsapp_number: string
+          working_days: number[]
+        }
+        Insert: {
+          closing_time?: string
+          created_at?: string
+          id?: string
+          opening_time?: string
+          slot_duration_minutes?: number
+          updated_at?: string
+          whatsapp_number?: string
+          working_days?: number[]
+        }
+        Update: {
+          closing_time?: string
+          created_at?: string
+          id?: string
+          opening_time?: string
+          slot_duration_minutes?: number
+          updated_at?: string
+          whatsapp_number?: string
+          working_days?: number[]
+        }
+        Relationships: []
+      }
       links: {
         Row: {
           created_at: string
@@ -118,6 +190,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_taken_slots: {
+        Args: { p_date: string }
+        Returns: {
+          appointment_time: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -128,6 +206,12 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      appointment_status:
+        | "pending"
+        | "confirmed"
+        | "rescheduled"
+        | "cancelled"
+        | "completed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -256,6 +340,13 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      appointment_status: [
+        "pending",
+        "confirmed",
+        "rescheduled",
+        "cancelled",
+        "completed",
+      ],
     },
   },
 } as const
