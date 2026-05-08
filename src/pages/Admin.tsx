@@ -556,11 +556,20 @@ const Admin = () => {
               <Link2 className="w-4 h-4" />
               Links
             </TabsTrigger>
+            <TabsTrigger value="agenda" className="flex-1 gap-2">
+              <Calendar className="w-4 h-4" />
+              Agenda
+            </TabsTrigger>
             <TabsTrigger value="settings" className="flex-1 gap-2">
               <Palette className="w-4 h-4" />
               Personalização
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="agenda" className="mt-4">
+            <AgendaAdmin />
+          </TabsContent>
+
 
           {/* ── Links Tab ── */}
           <TabsContent value="links" className="mt-4">
