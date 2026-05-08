@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Save, Plus, Trash2, Eye, LogOut, Settings, Link2, Palette } from "lucide-react";
+import { ArrowLeft, Save, Plus, Trash2, Eye, LogOut, Settings, Link2, Palette, Calendar } from "lucide-react";
+import AgendaAdmin from "@/components/AgendaAdmin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
