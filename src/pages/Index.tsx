@@ -101,9 +101,10 @@ const Index = () => {
         <nav className="w-full flex flex-col gap-4 mt-4">
           <Link
             to="/agenda"
-            className={`w-full text-center bg-primary text-primary-foreground rounded-full py-4 px-6 font-semibold shadow-lg hover:opacity-90 transition-opacity ${bodyFont}`}
+            className={`w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-full py-4 px-6 font-semibold shadow-lg hover:opacity-90 transition-opacity ${bodyFont}`}
           >
-            📅 Agendar Consulta
+            <CalendarCheck className="w-5 h-5" strokeWidth={1.75} />
+            Agendar Consulta
           </Link>
           {links.length === 0 ? null : (
             links.map((link, index) => (
