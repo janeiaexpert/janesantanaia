@@ -9,7 +9,6 @@ import { supabase } from "@/integrations/supabase/client";
 
 interface BusinessSettings {
   id: string;
-  whatsapp_number: string;
   slot_duration_minutes: number;
   opening_time: string;
   closing_time: string;
