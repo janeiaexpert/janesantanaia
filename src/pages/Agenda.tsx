@@ -178,7 +178,7 @@ const Agenda = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
-              <CalendarIcon className="w-5 h-5" /> Escolha data e horário
+              <CalendarCheck className="w-5 h-5" /> Escolha data e horário
             </CardTitle>
             {settings && (
               <p className="text-sm text-muted-foreground">
