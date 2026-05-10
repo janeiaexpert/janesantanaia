@@ -158,15 +158,6 @@ const AgendaAdmin = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-1">
-              <Label>Número do WhatsApp (com DDI, só números)</Label>
-              <Input
-                value={settings.whatsapp_number}
-                onChange={(e) => setSettings({ ...settings, whatsapp_number: e.target.value.replace(/\D/g, "") })}
-                placeholder="5511999999999"
-              />
-            </div>
-
             <div className="grid grid-cols-3 gap-3">
               <div className="space-y-1">
                 <Label>Abertura</Label>
