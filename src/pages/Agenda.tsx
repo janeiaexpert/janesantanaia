@@ -257,11 +257,11 @@ const Agenda = () => {
               </div>
 
               <Button type="submit" className="w-full" disabled={submitting || !selectedTime || !isWorkingDay}>
-                <MessageCircle className="w-4 h-4 mr-2" />
-                {submitting ? "Enviando..." : "Confirmar e abrir WhatsApp"}
+                <CalendarCheck className="w-4 h-4 mr-2" />
+                {submitting ? "Agendando..." : "Confirmar agendamento"}
               </Button>
               <p className="text-xs text-muted-foreground text-center">
-                Após confirmar, você será direcionado ao WhatsApp para finalizar.
+                O evento será adicionado automaticamente à agenda do Google.
               </p>
             </form>
           </CardContent>
