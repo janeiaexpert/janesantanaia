@@ -75,7 +75,6 @@ const AgendaAdmin = () => {
       const { error } = await supabase
         .from("business_settings")
         .update({
-          whatsapp_number: settings.whatsapp_number,
           slot_duration_minutes: settings.slot_duration_minutes,
           opening_time: settings.opening_time,
           closing_time: settings.closing_time,
