@@ -11,11 +11,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 
 interface BusinessSettings {
-  whatsapp_number: string;
   slot_duration_minutes: number;
-  opening_time: string; // "HH:MM:SS"
+  opening_time: string;
   closing_time: string;
-  working_days: number[]; // 0=dom..6=sáb
+  working_days: number[];
 }
 
 const schema = z.object({
