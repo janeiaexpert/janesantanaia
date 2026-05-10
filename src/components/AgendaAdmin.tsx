@@ -250,13 +250,10 @@ const AgendaAdmin = () => {
                       </select>
                     </div>
                     <div className="flex gap-2 flex-wrap pt-2">
-                      <Button size="sm" variant="outline" onClick={() => sendWhatsApp(a, "confirm")}>
-                        <MessageCircle className="w-3 h-3 mr-1" /> Confirmar
+                      <Button size="sm" variant="outline" onClick={() => updateStatus(a.id, "confirmed")}>
+                        Confirmar
                       </Button>
-                      <Button size="sm" variant="outline" onClick={() => sendWhatsApp(a, "remind")}>
-                        Lembrete
-                      </Button>
-                      <Button size="sm" variant="outline" onClick={() => { sendWhatsApp(a, "reschedule"); startReschedule(a); }}>
+                      <Button size="sm" variant="outline" onClick={() => startReschedule(a)}>
                         Remarcar
                       </Button>
                       <Button size="sm" variant="ghost" className="text-destructive hover:text-destructive" onClick={() => deleteAppointment(a.id)}>
