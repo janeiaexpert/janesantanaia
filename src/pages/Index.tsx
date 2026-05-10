@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { CalendarCheck } from "lucide-react";
 import LinkButton from "@/components/LinkButton";
 import ProfileAvatar from "@/components/ProfileAvatar";
 import { supabase } from "@/integrations/supabase/client";
