@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Calendar as CalendarIcon, Clock, MessageCircle } from "lucide-react";
+import { ArrowLeft, CalendarCheck, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,11 +11,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 
 interface BusinessSettings {
-  whatsapp_number: string;
   slot_duration_minutes: number;
-  opening_time: string; // "HH:MM:SS"
+  opening_time: string;
   closing_time: string;
-  working_days: number[]; // 0=dom..6=sáb
+  working_days: number[];
 }
 
 const schema = z.object({
@@ -95,13 +94,6 @@ const Agenda = () => {
 
   const minDate = formatDateLocal(new Date());
 
-  const buildWhatsAppLink = (date: string, time: string) => {
-    const phone = (settings?.whatsapp_number || "").replace(/\D/g, "");
-    const [y, m, d] = date.split("-");
-    const msg = `Olá! Acabei de agendar uma consulta:%0A%0A📅 Data: ${d}/${m}/${y}%0A⏰ Horário: ${time}%0A👤 Nome: ${encodeURIComponent(form.client_name)}%0A📞 Telefone: ${encodeURIComponent(form.client_phone)}${form.notes ? `%0A📝 Observações: ${encodeURIComponent(form.notes)}` : ""}`;
-    return phone ? `https://wa.me/${phone}?text=${msg}` : "";
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedTime) {
@@ -116,14 +108,18 @@ const Agenda = () => {
 
     setSubmitting(true);
     try {
-      const { error } = await supabase.from("appointments").insert({
-        client_name: parsed.data.client_name,
-        client_phone: parsed.data.client_phone,
-        client_email: parsed.data.client_email || null,
-        notes: parsed.data.notes || null,
-        appointment_date: selectedDate,
-        appointment_time: selectedTime,
-      });
+      const { data: inserted, error } = await supabase
+        .from("appointments")
+        .insert({
+          client_name: parsed.data.client_name,
+          client_phone: parsed.data.client_phone,
+          client_email: parsed.data.client_email || null,
+          notes: parsed.data.notes || null,
+          appointment_date: selectedDate,
+          appointment_time: selectedTime,
+        })
+        .select("id")
+        .single();
 
       if (error) {
         if (error.code === "23505") {
@@ -134,9 +130,20 @@ const Agenda = () => {
         return;
       }
 
-      const wa = buildWhatsAppLink(selectedDate, selectedTime);
-      toast({ title: "Agendamento criado!", description: "Confirme pelo WhatsApp." });
-      if (wa) window.open(wa, "_blank");
+      // Create event on Google Calendar
+      try {
+        const { error: fnError } = await supabase.functions.invoke("create-calendar-event", {
+          body: { appointment_id: inserted!.id },
+        });
+        if (fnError) throw fnError;
+        toast({ title: "Agendamento confirmado!", description: "Adicionado à agenda do Google." });
+      } catch (fnErr: any) {
+        toast({
+          title: "Agendamento criado",
+          description: "Não foi possível adicionar ao Google Calendar agora. Você será contatado para confirmação.",
+        });
+        console.error("Calendar event error:", fnErr);
+      }
 
       // refresh slots
       const { data } = await supabase.rpc("get_taken_slots", { p_date: selectedDate });
@@ -171,7 +178,7 @@ const Agenda = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
-              <CalendarIcon className="w-5 h-5" /> Escolha data e horário
+              <CalendarCheck className="w-5 h-5" /> Escolha data e horário
             </CardTitle>
             {settings && (
               <p className="text-sm text-muted-foreground">
@@ -250,11 +257,11 @@ const Agenda = () => {
               </div>
 
               <Button type="submit" className="w-full" disabled={submitting || !selectedTime || !isWorkingDay}>
-                <MessageCircle className="w-4 h-4 mr-2" />
-                {submitting ? "Enviando..." : "Confirmar e abrir WhatsApp"}
+                <CalendarCheck className="w-4 h-4 mr-2" />
+                {submitting ? "Agendando..." : "Confirmar agendamento"}
               </Button>
               <p className="text-xs text-muted-foreground text-center">
-                Após confirmar, você será direcionado ao WhatsApp para finalizar.
+                O evento será adicionado automaticamente à agenda do Google.
               </p>
             </form>
           </CardContent>

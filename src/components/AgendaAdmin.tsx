@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Calendar, Save, Trash2, Phone, MessageCircle } from "lucide-react";
+import { Calendar, Save, Trash2, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,7 +9,6 @@ import { supabase } from "@/integrations/supabase/client";
 
 interface BusinessSettings {
   id: string;
-  whatsapp_number: string;
   slot_duration_minutes: number;
   opening_time: string;
   closing_time: string;
@@ -76,7 +75,6 @@ const AgendaAdmin = () => {
       const { error } = await supabase
         .from("business_settings")
         .update({
-          whatsapp_number: settings.whatsapp_number,
           slot_duration_minutes: settings.slot_duration_minutes,
           opening_time: settings.opening_time,
           closing_time: settings.closing_time,
@@ -142,17 +140,6 @@ const AgendaAdmin = () => {
     loadAll();
   };
 
-  const sendWhatsApp = (a: Appointment, action: "confirm" | "remind" | "reschedule") => {
-    const phone = a.client_phone.replace(/\D/g, "");
-    const [y, m, d] = a.appointment_date.split("-");
-    const time = a.appointment_time.slice(0, 5);
-    const date = `${d}/${m}/${y}`;
-    let text = "";
-    if (action === "confirm") text = `Olá ${a.client_name}! Confirmamos sua consulta para ${date} às ${time}. Até lá!`;
-    else if (action === "remind") text = `Olá ${a.client_name}! Lembrete da sua consulta amanhã, ${date} às ${time}.`;
-    else text = `Olá ${a.client_name}! Precisamos remarcar sua consulta de ${date} às ${time}. Qual horário fica melhor para você?`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
-  };
 
   const filtered = filterDate
     ? appointments.filter(a => a.appointment_date === filterDate)
@@ -171,15 +158,6 @@ const AgendaAdmin = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-1">
-              <Label>Número do WhatsApp (com DDI, só números)</Label>
-              <Input
-                value={settings.whatsapp_number}
-                onChange={(e) => setSettings({ ...settings, whatsapp_number: e.target.value.replace(/\D/g, "") })}
-                placeholder="5511999999999"
-              />
-            </div>
-
             <div className="grid grid-cols-3 gap-3">
               <div className="space-y-1">
                 <Label>Abertura</Label>
@@ -272,13 +250,10 @@ const AgendaAdmin = () => {
                       </select>
                     </div>
                     <div className="flex gap-2 flex-wrap pt-2">
-                      <Button size="sm" variant="outline" onClick={() => sendWhatsApp(a, "confirm")}>
-                        <MessageCircle className="w-3 h-3 mr-1" /> Confirmar
+                      <Button size="sm" variant="outline" onClick={() => updateStatus(a.id, "confirmed")}>
+                        Confirmar
                       </Button>
-                      <Button size="sm" variant="outline" onClick={() => sendWhatsApp(a, "remind")}>
-                        Lembrete
-                      </Button>
-                      <Button size="sm" variant="outline" onClick={() => { sendWhatsApp(a, "reschedule"); startReschedule(a); }}>
+                      <Button size="sm" variant="outline" onClick={() => startReschedule(a)}>
                         Remarcar
                       </Button>
                       <Button size="sm" variant="ghost" className="text-destructive hover:text-destructive" onClick={() => deleteAppointment(a.id)}>
