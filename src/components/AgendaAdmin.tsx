@@ -140,17 +140,6 @@ const AgendaAdmin = () => {
     loadAll();
   };
 
-  const sendWhatsApp = (a: Appointment, action: "confirm" | "remind" | "reschedule") => {
-    const phone = a.client_phone.replace(/\D/g, "");
-    const [y, m, d] = a.appointment_date.split("-");
-    const time = a.appointment_time.slice(0, 5);
-    const date = `${d}/${m}/${y}`;
-    let text = "";
-    if (action === "confirm") text = `Olá ${a.client_name}! Confirmamos sua consulta para ${date} às ${time}. Até lá!`;
-    else if (action === "remind") text = `Olá ${a.client_name}! Lembrete da sua consulta amanhã, ${date} às ${time}.`;
-    else text = `Olá ${a.client_name}! Precisamos remarcar sua consulta de ${date} às ${time}. Qual horário fica melhor para você?`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
-  };
 
   const filtered = filterDate
     ? appointments.filter(a => a.appointment_date === filterDate)
