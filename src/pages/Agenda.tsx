@@ -94,13 +94,6 @@ const Agenda = () => {
 
   const minDate = formatDateLocal(new Date());
 
-  const buildWhatsAppLink = (date: string, time: string) => {
-    const phone = (settings?.whatsapp_number || "").replace(/\D/g, "");
-    const [y, m, d] = date.split("-");
-    const msg = `Olá! Acabei de agendar uma consulta:%0A%0A📅 Data: ${d}/${m}/${y}%0A⏰ Horário: ${time}%0A👤 Nome: ${encodeURIComponent(form.client_name)}%0A📞 Telefone: ${encodeURIComponent(form.client_phone)}${form.notes ? `%0A📝 Observações: ${encodeURIComponent(form.notes)}` : ""}`;
-    return phone ? `https://wa.me/${phone}?text=${msg}` : "";
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedTime) {
@@ -115,14 +108,18 @@ const Agenda = () => {
 
     setSubmitting(true);
     try {
-      const { error } = await supabase.from("appointments").insert({
-        client_name: parsed.data.client_name,
-        client_phone: parsed.data.client_phone,
-        client_email: parsed.data.client_email || null,
-        notes: parsed.data.notes || null,
-        appointment_date: selectedDate,
-        appointment_time: selectedTime,
-      });
+      const { data: inserted, error } = await supabase
+        .from("appointments")
+        .insert({
+          client_name: parsed.data.client_name,
+          client_phone: parsed.data.client_phone,
+          client_email: parsed.data.client_email || null,
+          notes: parsed.data.notes || null,
+          appointment_date: selectedDate,
+          appointment_time: selectedTime,
+        })
+        .select("id")
+        .single();
 
       if (error) {
         if (error.code === "23505") {
@@ -133,9 +130,20 @@ const Agenda = () => {
         return;
       }
 
-      const wa = buildWhatsAppLink(selectedDate, selectedTime);
-      toast({ title: "Agendamento criado!", description: "Confirme pelo WhatsApp." });
-      if (wa) window.open(wa, "_blank");
+      // Create event on Google Calendar
+      try {
+        const { error: fnError } = await supabase.functions.invoke("create-calendar-event", {
+          body: { appointment_id: inserted!.id },
+        });
+        if (fnError) throw fnError;
+        toast({ title: "Agendamento confirmado!", description: "Adicionado à agenda do Google." });
+      } catch (fnErr: any) {
+        toast({
+          title: "Agendamento criado",
+          description: "Não foi possível adicionar ao Google Calendar agora. Você será contatado para confirmação.",
+        });
+        console.error("Calendar event error:", fnErr);
+      }
 
       // refresh slots
       const { data } = await supabase.rpc("get_taken_slots", { p_date: selectedDate });
