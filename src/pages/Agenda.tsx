@@ -20,7 +20,7 @@ interface BusinessSettings {
 const schema = z.object({
   client_name: z.string().trim().min(2, "Nome muito curto").max(100),
   client_phone: z.string().trim().min(8, "Telefone inválido").max(20),
-  client_email: z.string().trim().email("Email inválido").max(150).optional().or(z.literal("")),
+  client_email: z.string().trim().email("Email inválido").max(150),
   notes: z.string().trim().max(500).optional().or(z.literal("")),
 });
 
@@ -248,8 +248,8 @@ const Agenda = () => {
                 <Input value={form.client_phone} onChange={(e) => setForm({ ...form, client_phone: e.target.value })} required maxLength={20} placeholder="(00) 00000-0000" />
               </div>
               <div className="space-y-1">
-                <Label>Email (opcional)</Label>
-                <Input type="email" value={form.client_email} onChange={(e) => setForm({ ...form, client_email: e.target.value })} maxLength={150} />
+                <Label>Email *</Label>
+                <Input type="email" value={form.client_email} onChange={(e) => setForm({ ...form, client_email: e.target.value })} required maxLength={150} />
               </div>
               <div className="space-y-1">
                 <Label>Observações (opcional)</Label>
