@@ -58,7 +58,7 @@ Deno.serve(async (req) => {
     const em = endMinutes % 60;
     const endISO = `${appt.appointment_date}T${String(eh).padStart(2, "0")}:${String(em).padStart(2, "0")}:00`;
 
-    const event = {
+    const event: Record<string, unknown> = {
       summary: `Consulta — ${appt.client_name}`,
       description: [
         `Cliente: ${appt.client_name}`,
@@ -70,8 +70,11 @@ Deno.serve(async (req) => {
       end: { dateTime: endISO, timeZone },
       reminders: { useDefault: true },
     };
+    if (appt.client_email) {
+      event.attendees = [{ email: appt.client_email, displayName: appt.client_name }];
+    }
 
-    const resp = await fetch(`${GATEWAY_URL}/calendars/primary/events`, {
+    const resp = await fetch(`${GATEWAY_URL}/calendars/primary/events?sendUpdates=all`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${LOVABLE_API_KEY}`,
