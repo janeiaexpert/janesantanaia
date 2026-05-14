@@ -248,10 +248,10 @@ const Agenda = () => {
 
               <Button type="submit" className="w-full" disabled={submitting || !selectedTime || !isWorkingDay}>
                 <CalendarCheck className="w-4 h-4 mr-2" />
-                {submitting ? "Agendando..." : "Confirmar agendamento"}
+                {submitting ? "Enviando..." : "Solicitar agendamento"}
               </Button>
               <p className="text-xs text-muted-foreground text-center">
-                O evento será adicionado automaticamente à agenda do Google.
+                Após enviar, seu agendamento será confirmado em breve.
               </p>
             </form>
           </CardContent>
