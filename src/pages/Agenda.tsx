@@ -303,6 +303,29 @@ const Agenda = () => {
           </CardContent>
         </Card>
 
+        {(myAppointments.length > 0 || lookupLoading) && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Meus agendamentos</CardTitle>
+              <p className="text-sm text-muted-foreground">Status atualizado das suas consultas.</p>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              {lookupLoading && <p className="text-sm text-muted-foreground">Carregando...</p>}
+              {myAppointments.map((a) => (
+                <div key={a.id} className="flex items-center justify-between gap-2 p-3 bg-muted rounded-lg">
+                  <div className="text-sm">
+                    <p className="font-medium">
+                      {a.appointment_date.split("-").reverse().join("/")} • {a.appointment_time.slice(0, 5)}
+                    </p>
+                    <p className="text-xs text-muted-foreground">{a.client_name}</p>
+                  </div>
+                  <Badge variant={STATUS_VARIANT[a.status]}>{STATUS_LABEL[a.status]}</Badge>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        )}
+
         <div className="text-center">
           <Link to="/" className="text-sm text-muted-foreground hover:text-primary">← Voltar ao site</Link>
         </div>
