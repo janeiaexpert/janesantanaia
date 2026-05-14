@@ -130,20 +130,10 @@ const Agenda = () => {
         return;
       }
 
-      // Create event on Google Calendar
-      try {
-        const { error: fnError } = await supabase.functions.invoke("create-calendar-event", {
-          body: { appointment_id: inserted!.id },
-        });
-        if (fnError) throw fnError;
-        toast({ title: "Agendamento confirmado!", description: "Adicionado à agenda do Google." });
-      } catch (fnErr: any) {
-        toast({
-          title: "Agendamento criado",
-          description: "Não foi possível adicionar ao Google Calendar agora. Você será contatado para confirmação.",
-        });
-        console.error("Calendar event error:", fnErr);
-      }
+      toast({
+        title: "Agendamento recebido!",
+        description: "Você receberá uma confirmação em breve.",
+      });
 
       // refresh slots
       const { data } = await supabase.rpc("get_taken_slots", { p_date: selectedDate });
