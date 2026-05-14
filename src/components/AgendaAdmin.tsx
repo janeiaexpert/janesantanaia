@@ -35,6 +35,14 @@ const STATUS_LABEL: Record<Appointment["status"], string> = {
   completed: "Concluído",
 };
 
+const STATUS_VARIANT: Record<Appointment["status"], "default" | "secondary" | "destructive" | "outline"> = {
+  pending: "secondary",
+  confirmed: "default",
+  rescheduled: "outline",
+  cancelled: "destructive",
+  completed: "outline",
+};
+
 const DAY_LABELS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
 const formatDateLocal = (d: Date) => {
