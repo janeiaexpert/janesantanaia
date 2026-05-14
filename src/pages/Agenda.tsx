@@ -6,9 +6,36 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
+
+type AppointmentStatus = "pending" | "confirmed" | "rescheduled" | "cancelled" | "completed";
+
+interface MyAppointment {
+  id: string;
+  appointment_date: string;
+  appointment_time: string;
+  status: AppointmentStatus;
+  client_name: string;
+}
+
+const STATUS_LABEL: Record<AppointmentStatus, string> = {
+  pending: "Pendente",
+  confirmed: "Confirmado",
+  rescheduled: "Remarcado",
+  cancelled: "Cancelado",
+  completed: "Concluído",
+};
+
+const STATUS_VARIANT: Record<AppointmentStatus, "default" | "secondary" | "destructive" | "outline"> = {
+  pending: "secondary",
+  confirmed: "default",
+  rescheduled: "outline",
+  cancelled: "destructive",
+  completed: "outline",
+};
 
 interface BusinessSettings {
   slot_duration_minutes: number;
