@@ -84,6 +84,17 @@ const Agenda = () => {
     notes: "",
   });
 
+  const [myAppointments, setMyAppointments] = useState<MyAppointment[]>([]);
+  const [lookupLoading, setLookupLoading] = useState(false);
+
+  const loadMyAppointments = async (email: string) => {
+    if (!email || !email.includes("@")) return;
+    setLookupLoading(true);
+    const { data } = await supabase.rpc("get_my_appointments", { p_email: email });
+    if (data) setMyAppointments(data as MyAppointment[]);
+    setLookupLoading(false);
+  };
+
   useEffect(() => {
     (async () => {
       const { data } = await supabase.from("business_settings").select("*").maybeSingle();
