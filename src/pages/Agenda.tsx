@@ -278,7 +278,14 @@ const Agenda = () => {
               </div>
               <div className="space-y-1">
                 <Label>Email *</Label>
-                <Input type="email" value={form.client_email} onChange={(e) => setForm({ ...form, client_email: e.target.value })} required maxLength={150} />
+                <Input
+                  type="email"
+                  value={form.client_email}
+                  onChange={(e) => setForm({ ...form, client_email: e.target.value })}
+                  onBlur={(e) => loadMyAppointments(e.target.value)}
+                  required
+                  maxLength={150}
+                />
               </div>
               <div className="space-y-1">
                 <Label>Observações (opcional)</Label>
