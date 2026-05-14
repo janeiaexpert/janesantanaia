@@ -190,6 +190,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_my_appointments: {
+        Args: { p_email: string }
+        Returns: {
+          appointment_date: string
+          appointment_time: string
+          client_name: string
+          id: string
+          status: Database["public"]["Enums"]["appointment_status"]
+        }[]
+      }
       get_taken_slots: {
         Args: { p_date: string }
         Returns: {

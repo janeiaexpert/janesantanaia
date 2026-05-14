@@ -6,9 +6,36 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
+
+type AppointmentStatus = "pending" | "confirmed" | "rescheduled" | "cancelled" | "completed";
+
+interface MyAppointment {
+  id: string;
+  appointment_date: string;
+  appointment_time: string;
+  status: AppointmentStatus;
+  client_name: string;
+}
+
+const STATUS_LABEL: Record<AppointmentStatus, string> = {
+  pending: "Pendente",
+  confirmed: "Confirmado",
+  rescheduled: "Remarcado",
+  cancelled: "Cancelado",
+  completed: "Concluído",
+};
+
+const STATUS_VARIANT: Record<AppointmentStatus, "default" | "secondary" | "destructive" | "outline"> = {
+  pending: "secondary",
+  confirmed: "default",
+  rescheduled: "outline",
+  cancelled: "destructive",
+  completed: "outline",
+};
 
 interface BusinessSettings {
   slot_duration_minutes: number;
@@ -56,6 +83,17 @@ const Agenda = () => {
     client_email: "",
     notes: "",
   });
+
+  const [myAppointments, setMyAppointments] = useState<MyAppointment[]>([]);
+  const [lookupLoading, setLookupLoading] = useState(false);
+
+  const loadMyAppointments = async (email: string) => {
+    if (!email || !email.includes("@")) return;
+    setLookupLoading(true);
+    const { data } = await supabase.rpc("get_my_appointments", { p_email: email });
+    if (data) setMyAppointments(data as MyAppointment[]);
+    setLookupLoading(false);
+  };
 
   useEffect(() => {
     (async () => {
@@ -139,7 +177,8 @@ const Agenda = () => {
       const { data } = await supabase.rpc("get_taken_slots", { p_date: selectedDate });
       if (data) setTakenSlots((data as { appointment_time: string }[]).map(r => r.appointment_time.slice(0, 5)));
       setSelectedTime("");
-      setForm({ client_name: "", client_phone: "", client_email: "", notes: "" });
+      await loadMyAppointments(parsed.data.client_email);
+      setForm({ ...form, notes: "" });
     } catch (err: any) {
       toast({ title: "Erro ao agendar", description: err?.message ?? "Tente novamente", variant: "destructive" });
     } finally {
@@ -239,7 +278,14 @@ const Agenda = () => {
               </div>
               <div className="space-y-1">
                 <Label>Email *</Label>
-                <Input type="email" value={form.client_email} onChange={(e) => setForm({ ...form, client_email: e.target.value })} required maxLength={150} />
+                <Input
+                  type="email"
+                  value={form.client_email}
+                  onChange={(e) => setForm({ ...form, client_email: e.target.value })}
+                  onBlur={(e) => loadMyAppointments(e.target.value)}
+                  required
+                  maxLength={150}
+                />
               </div>
               <div className="space-y-1">
                 <Label>Observações (opcional)</Label>
@@ -256,6 +302,29 @@ const Agenda = () => {
             </form>
           </CardContent>
         </Card>
+
+        {(myAppointments.length > 0 || lookupLoading) && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Meus agendamentos</CardTitle>
+              <p className="text-sm text-muted-foreground">Status atualizado das suas consultas.</p>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              {lookupLoading && <p className="text-sm text-muted-foreground">Carregando...</p>}
+              {myAppointments.map((a) => (
+                <div key={a.id} className="flex items-center justify-between gap-2 p-3 bg-muted rounded-lg">
+                  <div className="text-sm">
+                    <p className="font-medium">
+                      {a.appointment_date.split("-").reverse().join("/")} • {a.appointment_time.slice(0, 5)}
+                    </p>
+                    <p className="text-xs text-muted-foreground">{a.client_name}</p>
+                  </div>
+                  <Badge variant={STATUS_VARIANT[a.status]}>{STATUS_LABEL[a.status]}</Badge>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        )}
 
         <div className="text-center">
           <Link to="/" className="text-sm text-muted-foreground hover:text-primary">← Voltar ao site</Link>

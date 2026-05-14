@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -32,6 +33,14 @@ const STATUS_LABEL: Record<Appointment["status"], string> = {
   rescheduled: "Remarcado",
   cancelled: "Cancelado",
   completed: "Concluído",
+};
+
+const STATUS_VARIANT: Record<Appointment["status"], "default" | "secondary" | "destructive" | "outline"> = {
+  pending: "secondary",
+  confirmed: "default",
+  rescheduled: "outline",
+  cancelled: "destructive",
+  completed: "outline",
 };
 
 const DAY_LABELS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
@@ -230,7 +239,10 @@ const AgendaAdmin = () => {
                   <>
                     <div className="flex items-start justify-between gap-2 flex-wrap">
                       <div>
-                        <p className="font-semibold">{a.client_name}</p>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <p className="font-semibold">{a.client_name}</p>
+                          <Badge variant={STATUS_VARIANT[a.status]}>{STATUS_LABEL[a.status]}</Badge>
+                        </div>
                         <p className="text-sm text-muted-foreground flex items-center gap-1">
                           <Phone className="w-3 h-3" /> {a.client_phone}
                         </p>
