@@ -239,7 +239,10 @@ const AgendaAdmin = () => {
                   <>
                     <div className="flex items-start justify-between gap-2 flex-wrap">
                       <div>
-                        <p className="font-semibold">{a.client_name}</p>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <p className="font-semibold">{a.client_name}</p>
+                          <Badge variant={STATUS_VARIANT[a.status]}>{STATUS_LABEL[a.status]}</Badge>
+                        </div>
                         <p className="text-sm text-muted-foreground flex items-center gap-1">
                           <Phone className="w-3 h-3" /> {a.client_phone}
                         </p>
