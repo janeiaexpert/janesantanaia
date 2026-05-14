@@ -177,7 +177,8 @@ const Agenda = () => {
       const { data } = await supabase.rpc("get_taken_slots", { p_date: selectedDate });
       if (data) setTakenSlots((data as { appointment_time: string }[]).map(r => r.appointment_time.slice(0, 5)));
       setSelectedTime("");
-      setForm({ client_name: "", client_phone: "", client_email: "", notes: "" });
+      await loadMyAppointments(parsed.data.client_email);
+      setForm({ ...form, notes: "" });
     } catch (err: any) {
       toast({ title: "Erro ao agendar", description: err?.message ?? "Tente novamente", variant: "destructive" });
     } finally {
