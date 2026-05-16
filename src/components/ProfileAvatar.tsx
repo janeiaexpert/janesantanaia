@@ -14,8 +14,8 @@ const sizes = {
 
 const ProfileAvatar = ({ size = "lg", onClick, className = "" }: ProfileAvatarProps) => {
   return (
-    <div 
-      className={`profile-ring cursor-pointer ${className}`}
+    <div
+      className={`profile-ring cursor-pointer ${sizes[size]} shrink-0 flex items-center justify-center overflow-hidden aspect-square ${className}`}
       onClick={onClick}
     >
       <img
@@ -24,7 +24,9 @@ const ProfileAvatar = ({ size = "lg", onClick, className = "" }: ProfileAvatarPr
         loading="eager"
         decoding="sync"
         fetchPriority="high"
-        className={`${sizes[size]} rounded-full object-cover bg-transparent`}
+        width={288}
+        height={288}
+        className="w-full h-full rounded-full object-cover bg-transparent block"
       />
     </div>
   );
