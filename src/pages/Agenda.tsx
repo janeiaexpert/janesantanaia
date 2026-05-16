@@ -282,7 +282,6 @@ const Agenda = () => {
                   type="email"
                   value={form.client_email}
                   onChange={(e) => setForm({ ...form, client_email: e.target.value })}
-                  onBlur={(e) => loadMyAppointments(e.target.value)}
                   required
                   maxLength={150}
                 />
