@@ -86,6 +86,7 @@ const Agenda = () => {
 
   const [myAppointments, setMyAppointments] = useState<MyAppointment[]>([]);
   const [lookupLoading, setLookupLoading] = useState(false);
+  const [trackedEmail, setTrackedEmail] = useState<string>("");
 
   const loadMyAppointments = async (email: string) => {
     if (!email || !email.includes("@")) return;
@@ -94,6 +95,24 @@ const Agenda = () => {
     if (data) setMyAppointments(data as MyAppointment[]);
     setLookupLoading(false);
   };
+
+  // Auto-refresh "Meus agendamentos" via realtime + polling fallback
+  useEffect(() => {
+    if (!trackedEmail) return;
+    const channel = supabase
+      .channel(`my-appts-${trackedEmail}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "appointments" },
+        () => loadMyAppointments(trackedEmail),
+      )
+      .subscribe();
+    const interval = setInterval(() => loadMyAppointments(trackedEmail), 15000);
+    return () => {
+      supabase.removeChannel(channel);
+      clearInterval(interval);
+    };
+  }, [trackedEmail]);
 
   useEffect(() => {
     (async () => {
@@ -178,6 +197,7 @@ const Agenda = () => {
       if (data) setTakenSlots((data as { appointment_time: string }[]).map(r => r.appointment_time.slice(0, 5)));
       setSelectedTime("");
       await loadMyAppointments(parsed.data.client_email);
+      setTrackedEmail(parsed.data.client_email);
       setForm({ ...form, notes: "" });
     } catch (err: any) {
       toast({ title: "Erro ao agendar", description: err?.message ?? "Tente novamente", variant: "destructive" });
