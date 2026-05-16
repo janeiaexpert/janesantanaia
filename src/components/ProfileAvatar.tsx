@@ -21,7 +21,10 @@ const ProfileAvatar = ({ size = "lg", onClick, className = "" }: ProfileAvatarPr
       <img
         src={profileImage}
         alt="Guia Fácil"
-        className={`${sizes[size]} rounded-full object-cover`}
+        loading="eager"
+        decoding="sync"
+        fetchPriority="high"
+        className={`${sizes[size]} rounded-full object-cover bg-transparent`}
       />
     </div>
   );
