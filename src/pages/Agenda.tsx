@@ -197,6 +197,7 @@ const Agenda = () => {
       if (data) setTakenSlots((data as { appointment_time: string }[]).map(r => r.appointment_time.slice(0, 5)));
       setSelectedTime("");
       await loadMyAppointments(parsed.data.client_email);
+      setTrackedEmail(parsed.data.client_email);
       setForm({ ...form, notes: "" });
     } catch (err: any) {
       toast({ title: "Erro ao agendar", description: err?.message ?? "Tente novamente", variant: "destructive" });
