@@ -96,9 +96,7 @@
   }
 
   .profile-ring {
-    @apply rounded-full p-1;
-    background: linear-gradient(135deg, hsl(43 74% 65%), hsl(38 60% 45%), hsl(45 80% 70%));
-    box-shadow: 0 0 20px hsl(43 74% 55% / 0.5), 0 4px 12px hsl(38 60% 35% / 0.3);
+    @apply rounded-full;
   }
 
   .profile-ring img {
