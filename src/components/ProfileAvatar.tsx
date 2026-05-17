@@ -4,6 +4,7 @@ interface ProfileAvatarProps {
   size?: "sm" | "md" | "lg";
   onClick?: () => void;
   className?: string;
+  src?: string | null;
 }
 
 const sizes = {
