@@ -13,14 +13,14 @@ const sizes = {
   lg: "w-36 h-36",
 };
 
-const ProfileAvatar = ({ size = "lg", onClick, className = "" }: ProfileAvatarProps) => {
+const ProfileAvatar = ({ size = "lg", onClick, className = "", src }: ProfileAvatarProps) => {
   return (
     <div
       className={`profile-ring cursor-pointer ${sizes[size]} shrink-0 flex items-center justify-center overflow-hidden aspect-square rounded-full border-2 border-primary/30 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-shadow duration-300 ${className}`}
       onClick={onClick}
     >
       <img
-        src={profileImage}
+        src={src || profileImage}
         alt="Guia Fácil"
         loading="eager"
         decoding="sync"
