@@ -84,7 +84,7 @@ const Index = () => {
       <div className="w-full max-w-lg flex flex-col items-center gap-8">
         {/* Brand Section */}
         <div className="flex flex-col items-center gap-5 animate-scale-in">
-          <ProfileAvatar size="lg" />
+          <ProfileAvatar size="lg" src={settings?.avatar_url} />
 
           <h1 className={`text-4xl md:text-5xl font-bold text-center text-foreground tracking-tight ${headingFont}`}>
             {settings?.site_title ?? "Link Tree"}
