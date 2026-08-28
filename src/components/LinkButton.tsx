@@ -12,11 +12,11 @@ const LinkButton = ({ title, url, icon }: LinkButtonProps) => {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="link-card flex items-center justify-center gap-3 group"
+      className="link-card group"
     >
       {icon && <span className="text-primary">{icon}</span>}
       <span className="text-foreground text-base font-medium">{title}</span>
-      <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+      <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity ml-auto" />
     </a>
   );
 };

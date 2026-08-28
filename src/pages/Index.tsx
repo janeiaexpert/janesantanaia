@@ -79,15 +79,27 @@ const Index = () => {
   const headingFont = settings?.font_heading ?? "font-playfair";
   const bodyFont = settings?.font_body ?? "font-arial";
 
-  return (
-    <main className="min-h-screen bg-background flex flex-col items-center px-6 py-16">
-      <div className="w-full max-w-lg flex flex-col items-center gap-8">
+return (
+    <main className="min-h-screen bg-background flex flex-col items-center px-6 py-16 relative overflow-hidden">
+      {/* Background Galáctico */}
+      <div className="bg-galactic" />
+      
+      {/* Elementos Flutuantes */}
+      <div className="floating-elements">
+        <div className="orb" />
+        <div className="orb" />
+        <div className="orb" />
+      </div>
+
+      <div className="w-full max-w-lg flex flex-col items-center gap-8 relative z-10">
         {/* Brand Section */}
         <div className="flex flex-col items-center gap-5 animate-scale-in">
-          <ProfileAvatar size="lg" src={settings?.avatar_url} />
+          <div className="profile-ring">
+            <ProfileAvatar size="lg" src={settings?.avatar_url} />
+          </div>
 
           <h1 className={`text-4xl md:text-5xl font-bold text-center text-foreground tracking-tight ${headingFont}`}>
-{settings?.site_title ?? "Mentoria & Consultoria"}
+            {settings?.site_title ?? "Mentoria & Consultoria"}
           </h1>
 
           {settings?.site_bio && (
@@ -99,18 +111,18 @@ const Index = () => {
 
         {/* Links Section */}
         <nav className="w-full flex flex-col gap-4 mt-4">
-          <Link
-            to="/agenda"
-            className={`w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-full py-4 px-6 font-semibold shadow-lg hover:opacity-90 transition-opacity ${bodyFont}`}
+          <a
+            href="/agenda"
+            className="btn-gradient w-full flex items-center justify-center gap-2"
           >
             <CalendarCheck className="w-5 h-5" strokeWidth={1.75} />
             Agendar Consulta
-          </Link>
+          </a>
           {links.length === 0 ? null : (
             links.map((link, index) => (
               <div
                 key={link.id}
-                className="animate-fade-in"
+                className="animate-fade-in-up"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <LinkButton title={link.title} url={link.url} />
@@ -124,12 +136,12 @@ const Index = () => {
           <p className={`text-sm text-muted-foreground ${bodyFont}`}>
             © {new Date().getFullYear()} {settings?.site_title ?? "Jane Santana"} • Todos os direitos reservados
           </p>
-          <Link
-            to="/admin"
+          <a
+            href="/admin"
             className="text-xs text-muted-foreground/40 hover:text-primary transition-colors inline-block"
           >
             Admin
-          </Link>
+          </a>
         </footer>
       </div>
     </main>

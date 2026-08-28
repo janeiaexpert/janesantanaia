@@ -48,18 +48,18 @@ const FONT_OPTIONS = [
 ];
 
 const BRAND_PALETTES = [
-  { name: "Claude", primary: "270 60% 55%", secondary: "270 40% 85%", background: "0 0% 98%", text: "0 0% 10%" },
-  { name: "NVIDIA", primary: "134 100% 50%", secondary: "0 0% 20%", background: "0 0% 5%", text: "0 0% 100%" },
-  { name: "Apple", primary: "0 0% 0%", secondary: "0 0% 35%", background: "0 0% 98%", text: "0 0% 10%" },
-  { name: "NuBank", primary: "283 75% 50%", secondary: "330 80% 55%", background: "283 75% 8%", text: "0 0% 100%" },
-  { name: "Nike", primary: "0 0% 5%", secondary: "0 0% 40%", background: "0 0% 95%", text: "0 0% 5%" },
-  { name: "Coca-Cola", primary: "0 100% 40%", secondary: "0 0% 10%", background: "0 0% 98%", text: "0 0% 10%" },
-  { name: "BMW", primary: "210 100% 50%", secondary: "0 0% 10%", background: "0 0% 98%", text: "0 0% 10%" },
-  { name: "Airbnb", primary: "350 65% 55%", secondary: "0 0% 20%", background: "0 0% 99%", text: "0 0% 15%" },
-  { name: "Ferrari", primary: "0 100% 45%", secondary: "45 100% 50%", background: "0 0% 5%", text: "0 0% 100%" },
-  { name: "ITAÚ", primary: "207 100% 50%", secondary: "45 100% 50%", background: "0 0% 98%", text: "0 0% 10%" },
-  { name: "xAI", primary: "0 0% 100%", secondary: "0 0% 50%", background: "0 0% 5%", text: "0 0% 100%" },
-  { name: "Spotify", primary: "140 100% 40%", secondary: "0 0% 10%", background: "0 0% 5%", text: "0 0% 100%" },
+  { name: "Claude", primary: "270 60% 55%", secondary: "270 30% 90%", background: "270 20% 98%", text: "270 30% 10%" },
+  { name: "NVIDIA", primary: "134 100% 50%", secondary: "134 60% 20%", background: "0 0% 3%", text: "0 0% 100%" },
+  { name: "Apple", primary: "0 0% 0%", secondary: "0 0% 40%", background: "0 0% 98%", text: "0 0% 5%" },
+  { name: "NuBank", primary: "283 75% 50%", secondary: "330 80% 55%", background: "283 50% 8%", text: "0 0% 100%" },
+  { name: "Nike", primary: "0 0% 5%", secondary: "0 0% 30%", background: "0 0% 96%", text: "0 0% 5%" },
+  { name: "Coca-Cola", primary: "0 100% 40%", secondary: "0 0% 8%", background: "0 0% 99%", text: "0 0% 5%" },
+  { name: "BMW", primary: "210 100% 50%", secondary: "0 0% 8%", background: "0 0% 98%", text: "0 0% 5%" },
+  { name: "Airbnb", primary: "350 65% 55%", secondary: "350 30% 90%", background: "350 20% 99%", text: "350 30% 10%" },
+  { name: "Ferrari", primary: "0 100% 45%", secondary: "45 100% 50%", background: "0 0% 3%", text: "0 0% 100%" },
+  { name: "ITAÚ", primary: "207 100% 50%", secondary: "45 100% 50%", background: "0 0% 98%", text: "0 0% 5%" },
+  { name: "xAI", primary: "0 0% 100%", secondary: "0 0% 60%", background: "0 0% 3%", text: "0 0% 100%" },
+  { name: "Spotify", primary: "140 100% 40%", secondary: "140 40% 15%", background: "0 0% 3%", text: "0 0% 100%" },
 ];
 
 const Admin = () => {
