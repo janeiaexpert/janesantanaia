@@ -299,17 +299,18 @@ const Agenda = () => {
                 <Label className="flex items-center gap-2"><Clock className="w-4 h-4" /> Horários disponíveis</Label>
                 <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                   {slots.map((s) => {
-                    const taken = takenSlots.includes(s);
+                    const taken = unavailable.has(s);
                     const isSelected = selectedTime === s;
                     return (
                       <button
                         key={s}
                         type="button"
                         disabled={taken}
+                        aria-pressed={isSelected}
                         onClick={() => setSelectedTime(s)}
                         className={`px-3 py-2 rounded-md border text-sm transition-colors ${
                           taken
-                            ? "bg-muted text-muted-foreground line-through cursor-not-allowed"
+                            ? "bg-muted text-muted-foreground line-through cursor-not-allowed opacity-60"
                             : isSelected
                               ? "bg-primary text-primary-foreground border-primary"
                               : "bg-background hover:bg-accent border-border"
@@ -323,7 +324,12 @@ const Agenda = () => {
                     <p className="col-span-full text-sm text-muted-foreground">Nenhum horário configurado.</p>
                   )}
                 </div>
+                {slots.length > 0 && !hasFreeSlot && (
+                  <p className="text-sm text-destructive">Todos os horários deste dia estão ocupados. Escolha outra data.</p>
+                )}
+                <p className="text-xs text-muted-foreground">Horários riscados já estão ocupados ou já passaram.</p>
               </div>
+
             )}
           </CardContent>
         </Card>
