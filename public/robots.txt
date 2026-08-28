@@ -1,14 +1,15 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
+# Robots.txt para mentorajanesantana.vercel.app
+# Permite rastreamento de todas as páginas públicas
+# Bloqueia áreas administrativas e privadas
 
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /reset-password
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://mentorajanesantana.vercel.app/sitemap.xml
+
+# Host
+Host: https://mentorajanesantana.vercel.app

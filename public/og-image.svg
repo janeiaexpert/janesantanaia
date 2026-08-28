@@ -1,0 +1,15 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="600" cy="315" r="120" fill="none" stroke="#e94560" stroke-width="3" opacity="0.3"/>
+  <circle cx="600" cy="315" r="80" fill="#e94560" opacity="0.2"/>
+  <text x="600" y="280" font-family="Georgia, serif" font-size="48" font-weight="bold" fill="#ffffff" text-anchor="middle">Jane Santana</text>
+  <text x="600" y="340" font-family="Arial, sans-serif" font-size="24" fill="#e94560" text-anchor="middle">Mentoria & Consultoria</text>
+  <text x="600" y="400" font-family="Arial, sans-serif" font-size="18" fill="#a0a0a0" text-anchor="middle">Agende sua consulta • Todos os links em um só lugar</text>
+  <text x="600" y="550" font-family="Arial, sans-serif" font-size="16" fill="#606060" text-anchor="middle">mentorajanesantana.vercel.app</text>
+</svg>
