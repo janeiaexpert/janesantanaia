@@ -14,7 +14,7 @@ const sizes = {
 const ProfileAvatar = ({ size = "lg", onClick, className = "", src }: ProfileAvatarProps) => {
   return (
     <div
-      className={`cursor-pointer ${sizes[size]} shrink-0 flex items-center justify-center overflow-hidden aspect-square rounded-full ${className}`}
+      className={`cursor-pointer ${sizes[size]} shrink-0 flex items-center justify-center overflow-hidden rounded-full ${className}`}
       onClick={onClick}
     >
       {src ? (
@@ -24,9 +24,8 @@ const ProfileAvatar = ({ size = "lg", onClick, className = "", src }: ProfileAva
           loading="eager"
           decoding="sync"
           fetchPriority="high"
-          width={288}
-          height={288}
-          className="w-full h-full rounded-full object-cover bg-transparent block"
+          className="w-full h-full rounded-full object-cover object-center scale-110"
+          style={{ objectPosition: "center 20%" }}
         />
       ) : (
         <div className="w-full h-full rounded-full bg-muted flex items-center justify-center">

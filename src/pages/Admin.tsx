@@ -47,6 +47,21 @@ const FONT_OPTIONS = [
   { label: "DM Sans", value: "font-dm-sans" },
 ];
 
+const BRAND_PALETTES = [
+  { name: "Claude", primary: "270 60% 55%", secondary: "270 40% 85%", background: "0 0% 98%", text: "0 0% 10%" },
+  { name: "NVIDIA", primary: "134 100% 50%", secondary: "0 0% 20%", background: "0 0% 5%", text: "0 0% 100%" },
+  { name: "Apple", primary: "0 0% 0%", secondary: "0 0% 35%", background: "0 0% 98%", text: "0 0% 10%" },
+  { name: "NuBank", primary: "283 75% 50%", secondary: "330 80% 55%", background: "283 75% 8%", text: "0 0% 100%" },
+  { name: "Nike", primary: "0 0% 5%", secondary: "0 0% 40%", background: "0 0% 95%", text: "0 0% 5%" },
+  { name: "Coca-Cola", primary: "0 100% 40%", secondary: "0 0% 10%", background: "0 0% 98%", text: "0 0% 10%" },
+  { name: "BMW", primary: "210 100% 50%", secondary: "0 0% 10%", background: "0 0% 98%", text: "0 0% 10%" },
+  { name: "Airbnb", primary: "350 65% 55%", secondary: "0 0% 20%", background: "0 0% 99%", text: "0 0% 15%" },
+  { name: "Ferrari", primary: "0 100% 45%", secondary: "45 100% 50%", background: "0 0% 5%", text: "0 0% 100%" },
+  { name: "ITAÚ", primary: "207 100% 50%", secondary: "45 100% 50%", background: "0 0% 98%", text: "0 0% 10%" },
+  { name: "xAI", primary: "0 0% 100%", secondary: "0 0% 50%", background: "0 0% 5%", text: "0 0% 100%" },
+  { name: "Spotify", primary: "140 100% 40%", secondary: "0 0% 10%", background: "0 0% 5%", text: "0 0% 100%" },
+];
+
 const Admin = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
@@ -717,31 +732,62 @@ const Admin = () => {
                       Paleta de Cores
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="grid grid-cols-2 gap-4">
-                    {[
-                      { key: "color_primary" as const, label: "Cor Primária" },
-                      { key: "color_secondary" as const, label: "Cor Secundária" },
-                      { key: "color_background" as const, label: "Fundo" },
-                      { key: "color_text" as const, label: "Texto" },
-                    ].map(({ key, label }) => (
-                      <div key={key} className="space-y-1">
-                        <Label className="text-xs">{label}</Label>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="color"
-                            value={hslToHex(settings[key])}
-                            onChange={(e) => updateSetting(key, hexToHsl(e.target.value))}
-                            className="h-9 w-9 rounded cursor-pointer border border-border p-0.5 bg-transparent"
-                          />
-                          <Input
-                            value={settings[key]}
-                            onChange={(e) => updateSetting(key, e.target.value)}
-                            placeholder="H S% L%"
-                            className="text-xs font-mono"
-                          />
-                        </div>
+                  <CardContent className="space-y-4">
+                    {/* Paletas de Grandes Marcas */}
+                    <div className="space-y-2">
+                      <Label className="text-sm font-semibold">Paletas de Marcas (© direitos reservados)</Label>
+                      <p className="text-xs text-muted-foreground">Clique para aplicar uma paleta inspirada em marcas famosas</p>
+                      <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                        {BRAND_PALETTES.map((palette) => (
+                          <button
+                            key={palette.name}
+                            type="button"
+                            onClick={() => {
+                              updateSetting("color_primary", palette.primary);
+                              updateSetting("color_secondary", palette.secondary);
+                              updateSetting("color_background", palette.background);
+                              updateSetting("color_text", palette.text);
+                            }}
+                            className="flex flex-col items-center gap-1 p-2 rounded-lg border border-border hover:border-primary transition-colors"
+                          >
+                            <div className="flex gap-1">
+                              <div className="w-4 h-4 rounded-full" style={{ backgroundColor: hslToHex(palette.primary) }} />
+                              <div className="w-4 h-4 rounded-full" style={{ backgroundColor: hslToHex(palette.secondary) }} />
+                              <div className="w-4 h-4 rounded-full border" style={{ backgroundColor: hslToHex(palette.background) }} />
+                            </div>
+                            <span className="text-xs text-muted-foreground">{palette.name}</span>
+                          </button>
+                        ))}
                       </div>
-                    ))}
+                    </div>
+
+                    {/* Cores Manuais */}
+                    <div className="grid grid-cols-2 gap-4">
+                      {[
+                        { key: "color_primary" as const, label: "Cor Primária" },
+                        { key: "color_secondary" as const, label: "Cor Secundária" },
+                        { key: "color_background" as const, label: "Fundo" },
+                        { key: "color_text" as const, label: "Texto" },
+                      ].map(({ key, label }) => (
+                        <div key={key} className="space-y-1">
+                          <Label className="text-xs">{label}</Label>
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="color"
+                              value={hslToHex(settings[key])}
+                              onChange={(e) => updateSetting(key, hexToHsl(e.target.value))}
+                              className="h-9 w-9 rounded cursor-pointer border border-border p-0.5 bg-transparent"
+                            />
+                            <Input
+                              value={settings[key]}
+                              onChange={(e) => updateSetting(key, e.target.value)}
+                              placeholder="H S% L%"
+                              className="text-xs font-mono"
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -777,7 +823,68 @@ const Admin = () => {
                   </CardContent>
                 </Card>
 
-                {/* Save button */}
+                {/* Motion e Fundo Interativo */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-base flex items-center gap-2">
+                      <Settings className="w-4 h-4" />
+                      Motion e Fundo Interativo
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <Label className="text-sm font-semibold">Animações de Entrada</Label>
+                      <p className="text-xs text-muted-foreground">Efeitos ao carregar a página</p>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          { label: "Nenhuma", value: "none" },
+                          { label: "Fade In", value: "fade" },
+                          { label: "Slide Up", value: "slide" },
+                          { label: "Scale", value: "scale" },
+                          { label: "Blur", value: "blur" },
+                        ].map((opt) => (
+                          <button
+                            key={opt.value}
+                            type="button"
+                            className="px-3 py-1 text-xs rounded-full border border-border hover:border-primary transition-colors"
+                          >
+                            {opt.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-sm font-semibold">Fundo Interativo</Label>
+                      <p className="text-xs text-muted-foreground">Efeitos visuais no fundo da página</p>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          { label: "Nenhum", value: "none" },
+                          { label: "Gradiente Animado", value: "gradient" },
+                          { label: "Partículas", value: "particles" },
+                          { label: "Ondas", value: "waves" },
+                          { label: "Blur Dinâmico", value: "blur" },
+                        ].map((opt) => (
+                          <button
+                            key={opt.value}
+                            type="button"
+                            className="px-3 py-1 text-xs rounded-full border border-border hover:border-primary transition-colors"
+                          >
+                            {opt.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-sm font-semibold">Velocidade da Animação</Label>
+                      <div className="flex items-center gap-3">
+                        <input type="range" min="0" max="100" defaultValue="50" className="flex-1" />
+                        <span className="text-xs text-muted-foreground">50%</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
                 <Button className="w-full" onClick={saveSettings} disabled={settingsSaving}>
                   <Save className="w-4 h-4 mr-2" />
                   {settingsSaving ? "Salvando..." : "Salvar Configurações"}
