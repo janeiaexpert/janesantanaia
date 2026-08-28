@@ -122,25 +122,63 @@ const Agenda = () => {
     })();
   }, []);
 
+  const loadTakenSlots = async (date: string) => {
+    const { data } = await supabase.rpc("get_taken_slots", { p_date: date });
+    if (data) setTakenSlots((data as { appointment_time: string }[]).map(r => r.appointment_time.slice(0, 5)));
+    else setTakenSlots([]);
+  };
+
   useEffect(() => {
     if (!selectedDate) return;
-    (async () => {
-      const { data } = await supabase.rpc("get_taken_slots", { p_date: selectedDate });
-      if (data) setTakenSlots((data as { appointment_time: string }[]).map(r => r.appointment_time.slice(0, 5)));
-      else setTakenSlots([]);
-      setSelectedTime("");
-    })();
+    setSelectedTime("");
+    loadTakenSlots(selectedDate);
+    const channel = supabase
+      .channel(`slots-${selectedDate}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "appointments" },
+        () => loadTakenSlots(selectedDate),
+      )
+      .subscribe();
+    const interval = setInterval(() => loadTakenSlots(selectedDate), 20000);
+    return () => {
+      supabase.removeChannel(channel);
+      clearInterval(interval);
+    };
   }, [selectedDate]);
 
   const slots = useMemo(() => {
     if (!settings) return [];
-    const open = toMinutes(settings.opening_time);
-    const close = toMinutes(settings.closing_time);
-    const dur = settings.slot_duration_minutes;
+    const open = toMinutes(settings.opening_time.slice(0, 5));
+    const close = toMinutes(settings.closing_time.slice(0, 5));
+    const dur = settings.slot_duration_minutes > 0 ? settings.slot_duration_minutes : 60;
     const out: string[] = [];
     for (let t = open; t + dur <= close; t += dur) out.push(fromMinutes(t));
     return out;
   }, [settings]);
+
+  const isToday = selectedDate === formatDateLocal(new Date());
+
+  // A slot is unavailable when it overlaps any existing appointment interval,
+  // or when it is already in the past (for today).
+  const unavailable = useMemo(() => {
+    const dur = settings?.slot_duration_minutes && settings.slot_duration_minutes > 0 ? settings.slot_duration_minutes : 60;
+    const takenRanges = takenSlots.map(t => {
+      const start = toMinutes(t);
+      return [start, start + dur] as [number, number];
+    });
+    const now = new Date();
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+    const set = new Set<string>();
+    for (const s of slots) {
+      const start = toMinutes(s);
+      const end = start + dur;
+      const overlaps = takenRanges.some(([ts, te]) => start < te && ts < end);
+      const past = isToday && start <= nowMinutes;
+      if (overlaps || past) set.add(s);
+    }
+    return set;
+  }, [slots, takenSlots, settings, isToday]);
 
   const isWorkingDay = useMemo(() => {
     if (!settings || !selectedDate) return true;
@@ -149,12 +187,20 @@ const Agenda = () => {
     return settings.working_days.includes(dow);
   }, [settings, selectedDate]);
 
+  const hasFreeSlot = slots.some(s => !unavailable.has(s));
+
   const minDate = formatDateLocal(new Date());
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedTime) {
       toast({ title: "Escolha um horário", variant: "destructive" });
+      return;
+    }
+    if (unavailable.has(selectedTime)) {
+      toast({ title: "Horário indisponível", description: "Escolha outro horário.", variant: "destructive" });
+      setSelectedTime("");
       return;
     }
     const parsed = schema.safeParse(form);
@@ -165,22 +211,23 @@ const Agenda = () => {
 
     setSubmitting(true);
     try {
-      const { data: inserted, error } = await supabase
+      const { error } = await supabase
         .from("appointments")
         .insert({
           client_name: parsed.data.client_name,
           client_phone: parsed.data.client_phone,
-          client_email: parsed.data.client_email || null,
+          client_email: parsed.data.client_email,
           notes: parsed.data.notes || null,
           appointment_date: selectedDate,
           appointment_time: selectedTime,
-        })
-        .select("id")
-        .single();
+        });
 
       if (error) {
+        // 23505 = unique_violation (horário já ocupado)
         if (error.code === "23505") {
           toast({ title: "Horário indisponível", description: "Esse horário acabou de ser ocupado.", variant: "destructive" });
+          setSelectedTime("");
+          await loadTakenSlots(selectedDate);
         } else {
           throw error;
         }
@@ -192,13 +239,12 @@ const Agenda = () => {
         description: "Você receberá uma confirmação em breve.",
       });
 
-      // refresh slots
-      const { data } = await supabase.rpc("get_taken_slots", { p_date: selectedDate });
-      if (data) setTakenSlots((data as { appointment_time: string }[]).map(r => r.appointment_time.slice(0, 5)));
       setSelectedTime("");
-      await loadMyAppointments(parsed.data.client_email);
+      await loadTakenSlots(selectedDate);
       setTrackedEmail(parsed.data.client_email);
+      await loadMyAppointments(parsed.data.client_email);
       setForm({ ...form, notes: "" });
+
     } catch (err: any) {
       toast({ title: "Erro ao agendar", description: err?.message ?? "Tente novamente", variant: "destructive" });
     } finally {
@@ -253,17 +299,18 @@ const Agenda = () => {
                 <Label className="flex items-center gap-2"><Clock className="w-4 h-4" /> Horários disponíveis</Label>
                 <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                   {slots.map((s) => {
-                    const taken = takenSlots.includes(s);
+                    const taken = unavailable.has(s);
                     const isSelected = selectedTime === s;
                     return (
                       <button
                         key={s}
                         type="button"
                         disabled={taken}
+                        aria-pressed={isSelected}
                         onClick={() => setSelectedTime(s)}
                         className={`px-3 py-2 rounded-md border text-sm transition-colors ${
                           taken
-                            ? "bg-muted text-muted-foreground line-through cursor-not-allowed"
+                            ? "bg-muted text-muted-foreground line-through cursor-not-allowed opacity-60"
                             : isSelected
                               ? "bg-primary text-primary-foreground border-primary"
                               : "bg-background hover:bg-accent border-border"
@@ -277,7 +324,12 @@ const Agenda = () => {
                     <p className="col-span-full text-sm text-muted-foreground">Nenhum horário configurado.</p>
                   )}
                 </div>
+                {slots.length > 0 && !hasFreeSlot && (
+                  <p className="text-sm text-destructive">Todos os horários deste dia estão ocupados. Escolha outra data.</p>
+                )}
+                <p className="text-xs text-muted-foreground">Horários riscados já estão ocupados ou já passaram.</p>
               </div>
+
             )}
           </CardContent>
         </Card>

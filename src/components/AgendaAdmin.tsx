@@ -75,7 +75,17 @@ const AgendaAdmin = () => {
     setLoading(false);
   };
 
-  useEffect(() => { loadAll(); }, []);
+  useEffect(() => {
+    loadAll();
+    const channel = supabase
+      .channel("admin-appointments")
+      .on("postgres_changes", { event: "*", schema: "public", table: "appointments" }, () => loadAll())
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
 
   const saveSettings = async () => {
     if (!settings) return;
@@ -136,18 +146,31 @@ const AgendaAdmin = () => {
 
   const saveReschedule = async () => {
     if (!editingId) return;
+    if (!editDate || !editTime) {
+      toast({ title: "Informe data e horário", variant: "destructive" });
+      return;
+    }
+    const conflict = appointments.find(
+      a => a.id !== editingId && a.appointment_date === editDate && a.appointment_time.slice(0, 5) === editTime && a.status !== "cancelled",
+    );
+    if (conflict) {
+      toast({ title: "Horário ocupado", description: `Já existe agendamento de ${conflict.client_name} nesse horário.`, variant: "destructive" });
+      return;
+    }
     const { error } = await supabase
       .from("appointments")
       .update({ appointment_date: editDate, appointment_time: editTime, status: "rescheduled" })
       .eq("id", editingId);
     if (error) {
-      toast({ title: "Erro ao remarcar", description: error.message, variant: "destructive" });
+      const msg = error.code === "23505" ? "Esse horário já está ocupado." : error.message;
+      toast({ title: "Erro ao remarcar", description: msg, variant: "destructive" });
       return;
     }
     toast({ title: "Consulta remarcada!" });
     setEditingId(null);
     loadAll();
   };
+
 
 
   const filtered = filterDate
