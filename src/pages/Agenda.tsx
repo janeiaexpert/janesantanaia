@@ -42,7 +42,9 @@ interface BusinessSettings {
   opening_time: string;
   closing_time: string;
   working_days: number[];
+  whatsapp_number: string | null;
 }
+
 
 const schema = z.object({
   client_name: z.string().trim().min(2, "Nome muito curto").max(100),
@@ -234,9 +236,25 @@ const Agenda = () => {
         return;
       }
 
+      const waNumber = (settings?.whatsapp_number || "").replace(/\D/g, "");
+      if (waNumber) {
+        const msg = [
+          "*Novo agendamento — Tex IA*",
+          `Nome: ${parsed.data.client_name}`,
+          `WhatsApp: ${parsed.data.client_phone}`,
+          `Email: ${parsed.data.client_email}`,
+          `Data: ${selectedDate.split("-").reverse().join("/")}`,
+          `Horário: ${selectedTime}`,
+          parsed.data.notes ? `Observações: ${parsed.data.notes}` : null,
+        ].filter(Boolean).join("\n");
+        window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
+      }
+
       toast({
         title: "Agendamento recebido!",
-        description: "Você receberá uma confirmação em breve.",
+        description: waNumber
+          ? "Envie a mensagem no WhatsApp que abrimos para confirmar mais rápido."
+          : "Você receberá uma confirmação em breve.",
       });
 
       setSelectedTime("");
@@ -244,6 +262,7 @@ const Agenda = () => {
       setTrackedEmail(parsed.data.client_email);
       await loadMyAppointments(parsed.data.client_email);
       setForm({ ...form, notes: "" });
+
 
     } catch (err: any) {
       toast({ title: "Erro ao agendar", description: err?.message ?? "Tente novamente", variant: "destructive" });
