@@ -122,25 +122,63 @@ const Agenda = () => {
     })();
   }, []);
 
+  const loadTakenSlots = async (date: string) => {
+    const { data } = await supabase.rpc("get_taken_slots", { p_date: date });
+    if (data) setTakenSlots((data as { appointment_time: string }[]).map(r => r.appointment_time.slice(0, 5)));
+    else setTakenSlots([]);
+  };
+
   useEffect(() => {
     if (!selectedDate) return;
-    (async () => {
-      const { data } = await supabase.rpc("get_taken_slots", { p_date: selectedDate });
-      if (data) setTakenSlots((data as { appointment_time: string }[]).map(r => r.appointment_time.slice(0, 5)));
-      else setTakenSlots([]);
-      setSelectedTime("");
-    })();
+    setSelectedTime("");
+    loadTakenSlots(selectedDate);
+    const channel = supabase
+      .channel(`slots-${selectedDate}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "appointments" },
+        () => loadTakenSlots(selectedDate),
+      )
+      .subscribe();
+    const interval = setInterval(() => loadTakenSlots(selectedDate), 20000);
+    return () => {
+      supabase.removeChannel(channel);
+      clearInterval(interval);
+    };
   }, [selectedDate]);
 
   const slots = useMemo(() => {
     if (!settings) return [];
-    const open = toMinutes(settings.opening_time);
-    const close = toMinutes(settings.closing_time);
-    const dur = settings.slot_duration_minutes;
+    const open = toMinutes(settings.opening_time.slice(0, 5));
+    const close = toMinutes(settings.closing_time.slice(0, 5));
+    const dur = settings.slot_duration_minutes > 0 ? settings.slot_duration_minutes : 60;
     const out: string[] = [];
     for (let t = open; t + dur <= close; t += dur) out.push(fromMinutes(t));
     return out;
   }, [settings]);
+
+  const isToday = selectedDate === formatDateLocal(new Date());
+
+  // A slot is unavailable when it overlaps any existing appointment interval,
+  // or when it is already in the past (for today).
+  const unavailable = useMemo(() => {
+    const dur = settings?.slot_duration_minutes && settings.slot_duration_minutes > 0 ? settings.slot_duration_minutes : 60;
+    const takenRanges = takenSlots.map(t => {
+      const start = toMinutes(t);
+      return [start, start + dur] as [number, number];
+    });
+    const now = new Date();
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+    const set = new Set<string>();
+    for (const s of slots) {
+      const start = toMinutes(s);
+      const end = start + dur;
+      const overlaps = takenRanges.some(([ts, te]) => start < te && ts < end);
+      const past = isToday && start <= nowMinutes;
+      if (overlaps || past) set.add(s);
+    }
+    return set;
+  }, [slots, takenSlots, settings, isToday]);
 
   const isWorkingDay = useMemo(() => {
     if (!settings || !selectedDate) return true;
@@ -149,7 +187,10 @@ const Agenda = () => {
     return settings.working_days.includes(dow);
   }, [settings, selectedDate]);
 
+  const hasFreeSlot = slots.some(s => !unavailable.has(s));
+
   const minDate = formatDateLocal(new Date());
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
