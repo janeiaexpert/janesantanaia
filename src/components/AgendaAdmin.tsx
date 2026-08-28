@@ -75,7 +75,17 @@ const AgendaAdmin = () => {
     setLoading(false);
   };
 
-  useEffect(() => { loadAll(); }, []);
+  useEffect(() => {
+    loadAll();
+    const channel = supabase
+      .channel("admin-appointments")
+      .on("postgres_changes", { event: "*", schema: "public", table: "appointments" }, () => loadAll())
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
 
   const saveSettings = async () => {
     if (!settings) return;
