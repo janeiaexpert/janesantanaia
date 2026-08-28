@@ -87,7 +87,7 @@ const Index = () => {
           <ProfileAvatar size="lg" src={settings?.avatar_url} />
 
           <h1 className={`text-4xl md:text-5xl font-bold text-center text-foreground tracking-tight ${headingFont}`}>
-            {settings?.site_title ?? "Link Tree"}
+{settings?.site_title ?? "Mentoria & Consultoria"}
           </h1>
 
           {settings?.site_bio && (
@@ -122,7 +122,7 @@ const Index = () => {
         {/* Footer */}
         <footer className="mt-16 text-center space-y-2">
           <p className={`text-sm text-muted-foreground ${bodyFont}`}>
-            © {new Date().getFullYear()} {settings?.site_title ?? "Link Tree"} • Todos os direitos reservados
+            © {new Date().getFullYear()} {settings?.site_title ?? "Jane Santana"} • Todos os direitos reservados
           </p>
           <Link
             to="/admin"

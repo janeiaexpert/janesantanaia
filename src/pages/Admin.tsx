@@ -652,7 +652,7 @@ const Admin = () => {
                       <Input
                         value={settings.site_title}
                         onChange={(e) => updateSetting("site_title", e.target.value)}
-                        placeholder="Ex: Meu Link Tree"
+                        placeholder="Ex: Jane Santana - Mentoria"
                       />
                     </div>
                     <div className="space-y-1">
