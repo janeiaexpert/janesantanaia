@@ -42,7 +42,9 @@ interface BusinessSettings {
   opening_time: string;
   closing_time: string;
   working_days: number[];
+  whatsapp_number: string | null;
 }
+
 
 const schema = z.object({
   client_name: z.string().trim().min(2, "Nome muito curto").max(100),
