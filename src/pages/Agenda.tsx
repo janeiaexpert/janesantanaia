@@ -198,6 +198,11 @@ const Agenda = () => {
       toast({ title: "Escolha um horário", variant: "destructive" });
       return;
     }
+    if (unavailable.has(selectedTime)) {
+      toast({ title: "Horário indisponível", description: "Escolha outro horário.", variant: "destructive" });
+      setSelectedTime("");
+      return;
+    }
     const parsed = schema.safeParse(form);
     if (!parsed.success) {
       toast({ title: "Dados inválidos", description: parsed.error.errors[0].message, variant: "destructive" });
@@ -206,22 +211,23 @@ const Agenda = () => {
 
     setSubmitting(true);
     try {
-      const { data: inserted, error } = await supabase
+      const { error } = await supabase
         .from("appointments")
         .insert({
           client_name: parsed.data.client_name,
           client_phone: parsed.data.client_phone,
-          client_email: parsed.data.client_email || null,
+          client_email: parsed.data.client_email,
           notes: parsed.data.notes || null,
           appointment_date: selectedDate,
           appointment_time: selectedTime,
-        })
-        .select("id")
-        .single();
+        });
 
       if (error) {
+        // 23505 = unique_violation (horário já ocupado)
         if (error.code === "23505") {
           toast({ title: "Horário indisponível", description: "Esse horário acabou de ser ocupado.", variant: "destructive" });
+          setSelectedTime("");
+          await loadTakenSlots(selectedDate);
         } else {
           throw error;
         }
@@ -233,13 +239,12 @@ const Agenda = () => {
         description: "Você receberá uma confirmação em breve.",
       });
 
-      // refresh slots
-      const { data } = await supabase.rpc("get_taken_slots", { p_date: selectedDate });
-      if (data) setTakenSlots((data as { appointment_time: string }[]).map(r => r.appointment_time.slice(0, 5)));
       setSelectedTime("");
-      await loadMyAppointments(parsed.data.client_email);
+      await loadTakenSlots(selectedDate);
       setTrackedEmail(parsed.data.client_email);
+      await loadMyAppointments(parsed.data.client_email);
       setForm({ ...form, notes: "" });
+
     } catch (err: any) {
       toast({ title: "Erro ao agendar", description: err?.message ?? "Tente novamente", variant: "destructive" });
     } finally {
