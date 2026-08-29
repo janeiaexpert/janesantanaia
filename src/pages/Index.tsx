@@ -148,9 +148,9 @@ return (
           </p>
           <a
             href="/admin"
-            className="text-xs text-muted-foreground/40 hover:text-primary transition-colors inline-block"
+            className="inline-block px-6 py-2 text-xs font-medium text-primary border-2 border-primary rounded-full hover:bg-primary hover:text-primary-foreground transition-all"
           >
-            Admin
+            Personalizações
           </a>
         </footer>
       </div>
