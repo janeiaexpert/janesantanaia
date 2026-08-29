@@ -48,7 +48,7 @@ const FONT_OPTIONS = [
 ];
 
 const BRAND_PALETTES = [
-  { name: "Claude", primary: "270 60% 55%", secondary: "270 30% 90%", background: "270 20% 98%", text: "270 30% 10%" },
+  { name: "Claude", primary: "24 60% 55%", secondary: "30 30% 90%", background: "30 20% 97%", text: "0 0% 10%" },
   { name: "NVIDIA", primary: "134 100% 50%", secondary: "134 60% 20%", background: "0 0% 3%", text: "0 0% 100%" },
   { name: "Apple", primary: "0 0% 0%", secondary: "0 0% 40%", background: "0 0% 98%", text: "0 0% 5%" },
   { name: "NuBank", primary: "283 75% 50%", secondary: "330 80% 55%", background: "283 50% 8%", text: "0 0% 100%" },
