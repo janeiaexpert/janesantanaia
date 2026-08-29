@@ -24,8 +24,7 @@ const ProfileAvatar = ({ size = "lg", onClick, className = "", src }: ProfileAva
           loading="eager"
           decoding="sync"
           fetchPriority="high"
-          className="w-full h-full rounded-full object-cover object-center scale-110"
-          style={{ objectPosition: "center 20%" }}
+          className="w-full h-full rounded-full object-cover"
         />
       ) : (
         <div className="w-full h-full rounded-full bg-muted flex items-center justify-center">
