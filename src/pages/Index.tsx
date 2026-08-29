@@ -5,6 +5,7 @@ import LinkButton from "@/components/LinkButton";
 
 import ProfileAvatar from "@/components/ProfileAvatar";
 import { supabase } from "@/integrations/supabase/client";
+import { useSiteColors } from "@/hooks/useSiteColors";
 
 interface LinkItem {
   id: string;
@@ -34,6 +35,7 @@ const Index = () => {
   const [loading, setLoading] = useState(true);
   const [motionType, setMotionType] = useState("scale");
   const [bgType, setBgType] = useState("gradient");
+  useSiteColors();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,23 +57,7 @@ const Index = () => {
     fetchData();
   }, []);
 
-  // Apply dynamic CSS variables from site_settings
-  useEffect(() => {
-    if (!settings) return;
-    const root = document.documentElement;
-    root.style.setProperty("--primary", settings.color_primary);
-    root.style.setProperty("--background", settings.color_background);
-    root.style.setProperty("--foreground", settings.color_text);
-    root.style.setProperty("--card-foreground", settings.color_text);
-    root.style.setProperty("--secondary", settings.color_secondary);
-    return () => {
-      root.style.removeProperty("--primary");
-      root.style.removeProperty("--background");
-      root.style.removeProperty("--foreground");
-      root.style.removeProperty("--card-foreground");
-      root.style.removeProperty("--secondary");
-    };
-  }, [settings]);
+  // Colors applied via useSiteColors hook
 
   if (loading) {
     return (
