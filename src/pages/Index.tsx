@@ -26,14 +26,14 @@ interface SiteSettings {
   color_text: string;
   font_heading: string;
   font_body: string;
-  motion_type: string | null;
-  background_type: string | null;
 }
 
 const Index = () => {
   const [links, setLinks] = useState<LinkItem[]>([]);
   const [settings, setSettings] = useState<SiteSettings | null>(null);
   const [loading, setLoading] = useState(true);
+  const [motionType, setMotionType] = useState("scale");
+  const [bgType, setBgType] = useState("gradient");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,6 +44,8 @@ const Index = () => {
         ]);
         if (linksData) setLinks(linksData);
         if (settingsData) setSettings(settingsData);
+        setMotionType(localStorage.getItem("motion_type") || "scale");
+        setBgType(localStorage.getItem("background_type") || "gradient");
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -85,22 +87,22 @@ const Index = () => {
 return (
     <main className="min-h-screen bg-background flex flex-col items-center px-6 py-16 relative overflow-hidden">
       {/* Background Dinâmico */}
-      {(!settings?.background_type || settings.background_type === "none" || settings.background_type === "gradient") && (
+      {(bgType === "none" || bgType === "gradient") && (
         <div className="bg-galactic" />
       )}
-      {settings?.background_type === "particles" && (
+      {bgType === "particles" && (
         <div className="floating-elements">
           <div className="orb" /><div className="orb" /><div className="orb" />
         </div>
       )}
-      {settings?.background_type === "waves" && (
+      {bgType === "waves" && (
         <div className="bg-galactic" style={{ background: "linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--primary) / 0.1) 50%, hsl(var(--background)) 100%)" }} />
       )}
-      {settings?.background_type === "blur" && (
+      {bgType === "blur" && (
         <div className="bg-galactic" style={{ filter: "blur(40px)" }} />
       )}
 
-      {/* Floating Elements (sempre presentes) */}
+      {/* Floating Elements */}
       <div className="floating-elements">
         <div className="orb" /><div className="orb" /><div className="orb" />
       </div>
@@ -108,10 +110,11 @@ return (
         <div className="w-full max-w-lg flex flex-col items-center gap-8 relative z-10">
         {/* Brand Section */}
         <div className={`flex flex-col items-center gap-5 ${
-          settings?.motion_type === "fade" ? "animate-fade-in-up" :
-          settings?.motion_type === "slide" ? "animate-slide-in-left" :
-          settings?.motion_type === "scale" ? "animate-scale-in" :
-          settings?.motion_type === "blur" ? "animate-fade-in-up" :
+          motionType === "fade" ? "animate-fade-in-up" :
+          motionType === "slide" ? "animate-slide-in-left" :
+          motionType === "scale" ? "animate-scale-in" :
+          motionType === "blur" ? "animate-fade-in-up" :
+          motionType === "none" ? "" :
           "animate-scale-in"
         }`}>
           <div className="profile-ring">

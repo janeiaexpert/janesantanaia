@@ -33,8 +33,6 @@ interface SiteSettings {
   color_text: string;
   font_heading: string;
   font_body: string;
-  motion_type: string | null;
-  background_type: string | null;
 }
 
 const FONT_OPTIONS = [
@@ -87,6 +85,8 @@ const Admin = () => {
   const [settingsLoading, setSettingsLoading] = useState(false);
   const [settingsSaving, setSettingsSaving] = useState(false);
   const [avatarUploading, setAvatarUploading] = useState(false);
+  const [motionType, setMotionType] = useState("scale");
+  const [bgType, setBgType] = useState("gradient");
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -169,7 +169,11 @@ const Admin = () => {
         .select("*")
         .single();
       if (error && error.code !== "PGRST116") throw error;
-      if (data) setSettings(data);
+      if (data) {
+        setSettings(data);
+        setMotionType(localStorage.getItem("motion_type") || "scale");
+        setBgType(localStorage.getItem("background_type") || "gradient");
+      }
     } catch (error) {
       console.error("Error fetching settings:", error);
       toast({ title: "Erro ao carregar configurações", variant: "destructive" });
@@ -309,8 +313,7 @@ const Admin = () => {
             color_text: settings.color_text,
             font_heading: settings.font_heading,
             font_body: settings.font_body,
-            motion_type: settings.motion_type,
-            background_type: settings.background_type,
+
           })
           .eq("id", settings.id);
 
@@ -852,9 +855,12 @@ const Admin = () => {
                           <button
                             key={opt.value}
                             type="button"
-                            onClick={() => updateSetting("motion_type", opt.value)}
+                            onClick={() => {
+                              setMotionType(opt.value);
+                              localStorage.setItem("motion_type", opt.value);
+                            }}
                             className={`px-3 py-1 text-xs rounded-full border transition-colors ${
-                              settings?.motion_type === opt.value
+                              motionType === opt.value
                                 ? "bg-primary text-primary-foreground border-primary"
                                 : "border-border hover:border-primary"
                             }`}
@@ -879,9 +885,12 @@ const Admin = () => {
                           <button
                             key={opt.value}
                             type="button"
-                            onClick={() => updateSetting("background_type", opt.value)}
+                            onClick={() => {
+                              setBgType(opt.value);
+                              localStorage.setItem("background_type", opt.value);
+                            }}
                             className={`px-3 py-1 text-xs rounded-full border transition-colors ${
-                              settings?.background_type === opt.value
+                              bgType === opt.value
                                 ? "bg-primary text-primary-foreground border-primary"
                                 : "border-border hover:border-primary"
                             }`}
