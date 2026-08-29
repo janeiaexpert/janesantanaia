@@ -33,6 +33,8 @@ interface SiteSettings {
   color_text: string;
   font_heading: string;
   font_body: string;
+  motion_type: string | null;
+  background_type: string | null;
 }
 
 const FONT_OPTIONS = [
@@ -295,20 +297,22 @@ const Admin = () => {
     if (!settings) return;
     setSettingsSaving(true);
     try {
-      const { error } = await supabase
-        .from("site_settings")
-        .update({
-          site_title: settings.site_title,
-          site_bio: settings.site_bio,
-          avatar_url: settings.avatar_url,
-          color_primary: settings.color_primary,
-          color_secondary: settings.color_secondary,
-          color_background: settings.color_background,
-          color_text: settings.color_text,
-          font_heading: settings.font_heading,
-          font_body: settings.font_body,
-        })
-        .eq("id", settings.id);
+        const { error } = await supabase
+          .from("site_settings")
+          .update({
+            site_title: settings.site_title,
+            site_bio: settings.site_bio,
+            avatar_url: settings.avatar_url,
+            color_primary: settings.color_primary,
+            color_secondary: settings.color_secondary,
+            color_background: settings.color_background,
+            color_text: settings.color_text,
+            font_heading: settings.font_heading,
+            font_body: settings.font_body,
+            motion_type: settings.motion_type,
+            background_type: settings.background_type,
+          })
+          .eq("id", settings.id);
 
       if (error) throw error;
       toast({ title: "Configurações salvas!", description: "As alterações foram aplicadas ao site." });
@@ -848,7 +852,12 @@ const Admin = () => {
                           <button
                             key={opt.value}
                             type="button"
-                            className="px-3 py-1 text-xs rounded-full border border-border hover:border-primary transition-colors"
+                            onClick={() => updateSetting("motion_type", opt.value)}
+                            className={`px-3 py-1 text-xs rounded-full border transition-colors ${
+                              settings?.motion_type === opt.value
+                                ? "bg-primary text-primary-foreground border-primary"
+                                : "border-border hover:border-primary"
+                            }`}
                           >
                             {opt.label}
                           </button>
@@ -870,7 +879,12 @@ const Admin = () => {
                           <button
                             key={opt.value}
                             type="button"
-                            className="px-3 py-1 text-xs rounded-full border border-border hover:border-primary transition-colors"
+                            onClick={() => updateSetting("background_type", opt.value)}
+                            className={`px-3 py-1 text-xs rounded-full border transition-colors ${
+                              settings?.background_type === opt.value
+                                ? "bg-primary text-primary-foreground border-primary"
+                                : "border-border hover:border-primary"
+                            }`}
                           >
                             {opt.label}
                           </button>
