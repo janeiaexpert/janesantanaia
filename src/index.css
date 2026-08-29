@@ -494,3 +494,78 @@
   background-size: 50px 50px;
   min-height: 100vh;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   CHATGPT WORK CARD
+   ═══════════════════════════════════════════════════════════════ */
+.chatgpt-work-card {
+  position: relative;
+  width: 100%;
+  padding: 16px 20px;
+  background: linear-gradient(145deg,
+    rgba(16, 163, 127, 0.06),
+    rgba(16, 163, 127, 0.02));
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(16, 163, 127, 0.2);
+  box-shadow:
+    0 4px 15px rgba(16, 163, 127, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+  color: hsl(var(--foreground));
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.chatgpt-work-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(16, 163, 127, 0.1),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.chatgpt-work-card:hover::before {
+  left: 100%;
+}
+
+.chatgpt-work-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 30px rgba(16, 163, 127, 0.15),
+    0 4px 12px rgba(16, 163, 127, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border-color: rgba(16, 163, 127, 0.4);
+}
+
+.chatgpt-work-cta {
+  background: linear-gradient(135deg, #10a37f, #1a7f64);
+  border: none;
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(16, 163, 127, 0.3);
+}
+
+.chatgpt-work-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 163, 127, 0.4);
+}
