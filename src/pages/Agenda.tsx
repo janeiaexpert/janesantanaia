@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useSiteColors } from "@/hooks/useSiteColors";
 import { z } from "zod";
 
 type AppointmentStatus = "pending" | "confirmed" | "rescheduled" | "cancelled" | "completed";
@@ -72,6 +73,7 @@ const formatDateLocal = (d: Date) => {
 
 const Agenda = () => {
   const navigate = useNavigate();
+  useSiteColors();
   const [settings, setSettings] = useState<BusinessSettings | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>(formatDateLocal(new Date()));
   const [takenSlots, setTakenSlots] = useState<string[]>([]);

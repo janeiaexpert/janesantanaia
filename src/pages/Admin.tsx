@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useSiteColors } from "@/hooks/useSiteColors";
 import type { User, Session } from "@supabase/supabase-js";
 
 interface LinkItem {
@@ -64,6 +65,7 @@ const BRAND_PALETTES = [
 
 const Admin = () => {
   const navigate = useNavigate();
+  useSiteColors();
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);

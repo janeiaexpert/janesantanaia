@@ -125,7 +125,7 @@ return (
                 className="animate-fade-in-up"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <LinkButton title={link.title} url={link.url} />
+                <LinkButton title={link.title} url={link.url} icon={link.icon} />
               </div>
             ))
           )}
