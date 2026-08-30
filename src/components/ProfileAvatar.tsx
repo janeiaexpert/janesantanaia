@@ -7,8 +7,8 @@ interface ProfileAvatarProps {
 
 const sizes = {
   sm: "w-16 h-16",
-  md: "w-28 h-28",
-  lg: "w-36 h-36",
+  md: "w-24 h-24",
+  lg: "w-32 h-32",
 };
 
 const ProfileAvatar = ({ size = "lg", onClick, className = "", src }: ProfileAvatarProps) => {

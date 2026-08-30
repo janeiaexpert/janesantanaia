@@ -555,18 +555,18 @@ const Admin = () => {
     <main className="min-h-screen bg-background px-4 py-8">
       <div className="max-w-2xl mx-auto space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="icon" onClick={() => navigate("/")}>
               <ArrowLeft className="w-5 h-5" />
             </Button>
-            <h1 className="text-2xl font-montserrat font-bold">Painel Admin</h1>
+            <h1 className={`text-xl sm:text-2xl font-bold ${settings?.font_heading ?? "font-montserrat"}`}>Painel Admin</h1>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 ml-14 sm:ml-0">
             <Button variant="outline" size="sm" onClick={handleLogout}>
               Sair
             </Button>
-            <Button variant="outline" onClick={() => navigate("/")}>
+            <Button variant="outline" size="sm" onClick={() => navigate("/")}>
               <Eye className="w-4 h-4 mr-2" />
               Ver Site
             </Button>
