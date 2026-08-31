@@ -135,13 +135,15 @@
   animation: gradientShift 3s ease infinite;
   border: 2px solid hsl(var(--primary));
   border-radius: 50px;
-  padding: 14px 24px;
+  padding: 14px 20px;
   font-weight: 600;
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 20px hsla(var(--primary), 0.4);
-  font-size: 15px;
+  font-size: 14px;
+  width: 100%;
+  text-align: center;
 }
 
 @media (min-width: 640px) {
@@ -167,12 +169,12 @@
 .link-card {
   position: relative;
   width: 100%;
-  padding: 16px 20px;
+  padding: 14px 16px;
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.9), 
     rgba(255, 255, 255, 0.6));
   backdrop-filter: blur(10px);
-  border-radius: 20px;
+  border-radius: 16px;
   border: 2px solid hsl(var(--primary) / 0.4);
   box-shadow: 
     0 4px 15px rgba(0, 0, 0, 0.05),
@@ -181,10 +183,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
   font-weight: 500;
-  font-size: 15px;
+  font-size: 14px;
   color: hsl(var(--foreground));
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
@@ -196,6 +198,8 @@
   .link-card {
     padding: 20px 28px;
     font-size: 16px;
+    border-radius: 20px;
+    gap: 12px;
   }
 }
 

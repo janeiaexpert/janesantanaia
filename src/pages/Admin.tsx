@@ -552,7 +552,7 @@ const Admin = () => {
   }
 
   return (
-    <main className="min-h-screen bg-background px-4 py-8">
+    <main className="min-h-screen bg-background px-3 sm:px-4 py-6 sm:py-8">
       <div className="max-w-2xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -575,18 +575,19 @@ const Admin = () => {
 
         {/* Tabs */}
         <Tabs defaultValue="links">
-          <TabsList className="w-full">
-            <TabsTrigger value="links" className="flex-1 gap-2">
-              <Link2 className="w-4 h-4" />
+          <TabsList className="w-full grid grid-cols-3">
+            <TabsTrigger value="links" className="gap-1 sm:gap-2 text-xs sm:text-sm">
+              <Link2 className="w-3 h-3 sm:w-4 sm:h-4" />
               Links
             </TabsTrigger>
-            <TabsTrigger value="agenda" className="flex-1 gap-2">
-              <Calendar className="w-4 h-4" />
+            <TabsTrigger value="agenda" className="gap-1 sm:gap-2 text-xs sm:text-sm">
+              <Calendar className="w-3 h-3 sm:w-4 sm:h-4" />
               Agenda
             </TabsTrigger>
-            <TabsTrigger value="settings" className="flex-1 gap-2">
-              <Palette className="w-4 h-4" />
-              Personalização
+            <TabsTrigger value="settings" className="gap-1 sm:gap-2 text-xs sm:text-sm">
+              <Palette className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Personalização</span>
+              <span className="sm:hidden">Visual</span>
             </TabsTrigger>
           </TabsList>
 
@@ -598,8 +599,8 @@ const Admin = () => {
           {/* ── Links Tab ── */}
           <TabsContent value="links" className="mt-4">
             <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="font-poppins text-lg">Gerenciar Links</CardTitle>
+              <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <CardTitle className="font-poppins text-base sm:text-lg">Gerenciar Links</CardTitle>
                 <div className="flex gap-2">
                   <Button size="sm" variant="outline" onClick={addLink}>
                     <Plus className="w-4 h-4 mr-2" />
@@ -746,7 +747,7 @@ const Admin = () => {
                     <div className="space-y-2">
                       <Label className="text-sm font-semibold">Paletas de Marcas (© direitos reservados)</Label>
                       <p className="text-xs text-muted-foreground">Clique para aplicar uma paleta inspirada em marcas famosas</p>
-                      <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                         {BRAND_PALETTES.map((palette) => (
                           <button
                             key={palette.name}
@@ -771,7 +772,7 @@ const Admin = () => {
                     </div>
 
                     {/* Cores Manuais */}
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-3 sm:gap-4">
                       {[
                         { key: "color_primary" as const, label: "Cor Primária" },
                         { key: "color_secondary" as const, label: "Cor Secundária" },

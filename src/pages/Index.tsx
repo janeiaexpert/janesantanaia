@@ -71,7 +71,7 @@ const Index = () => {
   const bodyFont = settings?.font_body ?? "font-arial";
 
 return (
-    <main className="min-h-screen bg-background flex flex-col items-center px-6 py-16 relative overflow-hidden">
+    <main className="min-h-screen bg-background flex flex-col items-center px-4 sm:px-6 py-10 sm:py-16 relative overflow-hidden">
       {/* Background Dinâmico */}
       {(bgType === "none" || bgType === "gradient") && (
         <div className="bg-galactic" />
@@ -93,9 +93,9 @@ return (
         <div className="orb" /><div className="orb" /><div className="orb" />
       </div>
 
-        <div className="w-full max-w-lg flex flex-col items-center gap-8 relative z-10">
+        <div className="w-full max-w-lg flex flex-col items-center gap-6 sm:gap-8 relative z-10">
         {/* Brand Section */}
-        <div className={`flex flex-col items-center gap-5 ${
+          <div className={`flex flex-col items-center gap-4 sm:gap-5 ${
           motionType === "fade" ? "animate-fade-in-up" :
           motionType === "slide" ? "animate-slide-in-left" :
           motionType === "scale" ? "animate-scale-in" :
@@ -107,7 +107,7 @@ return (
             <ProfileAvatar size="lg" src={settings?.avatar_url} />
           </div>
 
-          <h1 className={`text-4xl md:text-5xl font-bold text-center text-foreground tracking-tight ${headingFont}`}>
+          <h1 className={`text-3xl sm:text-4xl md:text-5xl font-bold text-center text-foreground tracking-tight ${headingFont}`}>
             {settings?.site_title ?? "Mentoria & Consultoria"}
           </h1>
 
