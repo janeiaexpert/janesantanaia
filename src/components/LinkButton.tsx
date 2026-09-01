@@ -14,11 +14,11 @@ const LinkButton = ({ title, url, icon }: LinkButtonProps) => {
       rel="noopener noreferrer"
       className="link-card group"
     >
-      <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden flex-shrink-0">
+      <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden flex-shrink-0 bg-muted">
         <img
           src="/avatar-jane.jpg"
           alt=""
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
           onError={(e) => {
             (e.target as HTMLImageElement).style.display = "none";
             (e.target as HTMLImageElement).nextElementSibling?.classList.remove("hidden");
