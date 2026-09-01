@@ -733,6 +733,28 @@ const Admin = () => {
                           </Button>
                         </div>
                       </div>
+
+                      <div className="space-y-2">
+                        <Label className="text-sm">Ou escolha uma foto pronta:</Label>
+                        <div className="flex gap-3 flex-wrap">
+                          {[
+                            { src: "/avatar-jane.png", label: "Bege" },
+                            { src: "/avatar-opcao2.png", label: "Gold" },
+                            { src: "/avatar-opcao3.png", label: "Tech IA" },
+                          ].map((opt) => (
+                            <button
+                              key={opt.src}
+                              type="button"
+                              onClick={() => updateSetting("avatar_url", opt.src)}
+                              className={`w-16 h-16 rounded-full overflow-hidden border-2 transition-all hover:scale-105 ${
+                                settings.avatar_url === opt.src ? "border-primary ring-2 ring-primary/30" : "border-border"
+                              }`}
+                            >
+                              <img src={opt.src} alt={opt.label} className="w-full h-full object-cover" />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
