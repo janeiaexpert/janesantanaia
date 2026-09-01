@@ -16,7 +16,7 @@ const LinkButton = ({ title, url, icon }: LinkButtonProps) => {
     >
       <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden flex-shrink-0 bg-muted">
         <img
-          src="/avatar-jane.jpg"
+          src="/avatar-jane.png"
           alt=""
           className="w-full h-full object-contain"
           onError={(e) => {

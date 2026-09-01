@@ -18,14 +18,14 @@ const ProfileAvatar = ({ size = "lg", onClick, className = "", src }: ProfileAva
       onClick={onClick}
     >
       <img
-        src={src || "/avatar-jane.jpg"}
+        src={src || "/avatar-jane.png"}
         alt="Avatar"
         loading="eager"
         decoding="sync"
         fetchPriority="high"
         className="w-full h-full rounded-full object-cover"
         onError={(e) => {
-          (e.target as HTMLImageElement).src = "/avatar-jane.jpg";
+          (e.target as HTMLImageElement).src = "/avatar-jane.png";
         }}
       />
     </div>

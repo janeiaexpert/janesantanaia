@@ -61,6 +61,9 @@ const BRAND_PALETTES = [
   { name: "ITAÚ", primary: "207 100% 50%", secondary: "45 100% 50%", background: "0 0% 98%", text: "0 0% 5%" },
   { name: "xAI", primary: "0 0% 100%", secondary: "0 0% 60%", background: "0 0% 3%", text: "0 0% 100%" },
   { name: "Spotify", primary: "140 100% 40%", secondary: "140 40% 15%", background: "0 0% 3%", text: "0 0% 100%" },
+  { name: "Cyberpunk", primary: "300 100% 50%", secondary: "180 100% 50%", background: "0 0% 5%", text: "180 100% 80%" },
+  { name: "Cyberpunk Neon", primary: "280 100% 60%", secondary: "50 100% 50%", background: "260 30% 8%", text: "50 100% 80%" },
+  { name: "Cyberpunk Dark", primary: "320 100% 55%", secondary: "180 100% 45%", background: "270 20% 5%", text: "180 100% 90%" },
 ];
 
 const Admin = () => {
