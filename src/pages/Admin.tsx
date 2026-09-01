@@ -741,9 +741,10 @@ const Admin = () => {
                             { src: "/avatar-jane.png", label: "Bege" },
                             { src: "/avatar-opcao2.png", label: "Gold" },
                             { src: "/avatar-opcao3.png", label: "Tech IA" },
+                            { src: "https://ojphztggkjarpcspnjpy.supabase.co/storage/v1/object/public/avatars/site/46ee51da-a53c-4866-b9fe-97343f2f7552/avatar-1756772660000.png", label: "Default" },
                           ].map((opt) => (
                             <button
-                              key={opt.src}
+                              key={opt.label}
                               type="button"
                               onClick={() => updateSetting("avatar_url", opt.src)}
                               className={`w-16 h-16 rounded-full overflow-hidden border-2 transition-all hover:scale-105 ${
