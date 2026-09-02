@@ -455,7 +455,6 @@ const Admin = () => {
 
   if (!user) {
     return (
-    return (
       <main className="min-h-screen bg-background flex items-center justify-center px-4">
         <Card className="w-full max-w-sm">
           <CardHeader className="text-center">
