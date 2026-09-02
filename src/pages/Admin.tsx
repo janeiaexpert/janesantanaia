@@ -78,8 +78,6 @@ const Admin = () => {
   const [authLoading, setAuthLoading] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
-  const [adminGate, setAdminGate] = useState(false);
-  const [adminPin, setAdminPin] = useState("");
 
   // Links state
   const [links, setLinks] = useState<LinkItem[]>([]);
@@ -456,26 +454,7 @@ const Admin = () => {
   }
 
   if (!user) {
-    if (!adminGate) {
-      return (
-        <main className="min-h-screen bg-background flex items-center justify-center px-4">
-          <Card className="w-full max-w-sm">
-            <CardHeader className="text-center">
-              <CardTitle className="font-montserrat">Acesso Restrito</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={(e) => { e.preventDefault(); if (adminPin === "j@ne@1") setAdminGate(true); else toast({ title: "Senha incorreta", description: "Tente novamente.", variant: "destructive" }); }} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="pin">Senha de Acesso</Label>
-                  <Input id="pin" type="password" value={adminPin} onChange={(e) => setAdminPin(e.target.value)} placeholder="Digite a senha" required />
-                </div>
-                <Button type="submit" className="w-full">Entrar</Button>
-              </form>
-            </CardContent>
-          </Card>
-        </main>
-      );
-    }
+    return (
     return (
       <main className="min-h-screen bg-background flex items-center justify-center px-4">
         <Card className="w-full max-w-sm">
