@@ -464,7 +464,7 @@ const Admin = () => {
               <CardTitle className="font-montserrat">Acesso Restrito</CardTitle>
             </CardHeader>
             <CardContent>
-              <form onSubmit={(e) => { e.preventDefault(); if (adminPin === "jane2026") setAdminGate(true); else toast({ title: "Senha incorreta", description: "Tente novamente.", variant: "destructive" }); }} className="space-y-4">
+              <form onSubmit={(e) => { e.preventDefault(); if (adminPin === "j@ne@1") setAdminGate(true); else toast({ title: "Senha incorreta", description: "Tente novamente.", variant: "destructive" }); }} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="pin">Senha de Acesso</Label>
                   <Input id="pin" type="password" value={adminPin} onChange={(e) => setAdminPin(e.target.value)} placeholder="Digite a senha" required />
