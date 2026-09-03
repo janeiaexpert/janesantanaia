@@ -227,22 +227,31 @@
   transition: left 0.5s ease;
 }
 
-.link-card:hover::before {
-  left: 100%;
-}
+@media (hover: hover) and (pointer: fine) {
+  .link-card:hover::before {
+    left: 100%;
+  }
 
-.link-card:hover {
-  transform: translateY(-8px) rotateX(5deg);
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.15),
-    0 10px 20px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  border-color: hsl(var(--primary) / 0.5);
+  .link-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 
+      0 20px 40px rgba(0, 0, 0, 0.15),
+      0 10px 20px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    border-color: hsl(var(--primary) / 0.5);
+  }
 }
 
 .link-card:active {
-  transform: translateY(-2px) rotateX(0deg);
+  transform: scale(0.97);
+  border-color: hsl(var(--primary) / 0.6);
 }
+
+.link-card:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 3px;
+}
+
 
 /* ═══════════════════════════════════════════════════════════════
    FLOATING PARTICLES BACKGROUND
