@@ -296,17 +296,17 @@ export function generateCalendar(input: PlannerInput, year = 2026, month = 8): C
   return { posts, weeks, viralTop3 };
 }
 
-export const PILAR_META: Record<Pilar, { color: string; bg: string; icon: string; desc: string }> = {
-  atração: { color: "#0e7490", bg: "#ecfeff", icon: "🧲", desc: "alcance e novos seguidores" },
-  conexão: { color: "#be123c", bg: "#fff1f2", icon: "💬", desc: "proximidade e confiança" },
-  autoridade: { color: "#1d4ed8", bg: "#eff6ff", icon: "🎓", desc: "prova e ensino" },
-  conversão: { color: "#15803d", bg: "#f0fdf4", icon: "💰", desc: "oferta e venda" },
+export const PILAR_META: Record<Pilar, { color: string; bg: string; label: string; desc: string }> = {
+  atração: { color: "#0e7490", bg: "#ecfeff", label: "AT", desc: "alcance e novos seguidores" },
+  conexão: { color: "#be123c", bg: "#fff1f2", label: "CX", desc: "proximidade e confiança" },
+  autoridade: { color: "#1d4ed8", bg: "#eff6ff", label: "AU", desc: "prova e ensino" },
+  conversão: { color: "#15803d", bg: "#f0fdf4", label: "CV", desc: "oferta e venda" },
 };
 
-export const FORMATO_ICON: Record<Formato, string> = {
-  reels: "🎬",
-  carrossel: "🖼️",
-  stories: "⏰",
-  feed: "📸",
-  live: "🔴",
+export const FORMATO_LABEL: Record<Formato, string> = {
+  reels: "REELS",
+  carrossel: "CARROSSEL",
+  stories: "STORIES",
+  feed: "FEED",
+  live: "LIVE",
 };
