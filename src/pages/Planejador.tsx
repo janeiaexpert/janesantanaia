@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useMemo } from "react";
+﻿import { useEffect, useState, useRef, useMemo } from "react";
 import { generateCalendar, PILAR_META, FORMATO_LABEL, type PlannerInput, type Pilar, type Formato, type Post, type CalendarResult } from "@/lib/plannerEngine";
 import { toast } from "@/hooks/use-toast";
 
@@ -6,8 +6,8 @@ const STORAGE_KEY = "planner_setembro_2026_v3";
 
 const defaultInput: PlannerInput = {
   nicho: "marketing digital para iniciantes",
-  publico: "mulheres 25-40 anos que querem viver do digital, buscam liberdade e têm dor de não saber por onde começar",
-  dor: "falta de constância e medo de aparecer",
+  publico: "mulheres 25-40 anos que querem viver do digital, buscam liberdade e tÃªm dor de nÃ£o saber por onde comeÃ§ar",
+  dor: "falta de constÃ¢ncia e medo de aparecer",
   produto: "mentoria Desbloqueie seu Digital",
   frequencia: 5,
   formatos: ["reels", "carrossel", "stories"],
@@ -18,8 +18,8 @@ const defaultInput: PlannerInput = {
 // Trilha / stepper
 function Trilha({ step }: { step: number }) {
   const steps = [
-    { n: 1, title: "Definir", desc: "nicho e público" },
-    { n: 2, title: "Gerar", desc: "calendário set" },
+    { n: 1, title: "Definir", desc: "nicho e pÃºblico" },
+    { n: 2, title: "Gerar", desc: "calendÃ¡rio set" },
     { n: 3, title: "Revisar", desc: "editar headlines" },
     { n: 4, title: "Exportar", desc: "CSV / PDF" },
   ];
@@ -88,7 +88,7 @@ export default function Planejador() {
       const hasBasics = input.nicho.trim() && input.publico.trim();
       return hasBasics ? 1 : 1;
     }
-    // se tem resultado mas ainda não editou, está no passo 3
+    // se tem resultado mas ainda nÃ£o editou, estÃ¡ no passo 3
     return 3;
   }, [input.nicho, input.publico, result]);
 
@@ -98,7 +98,7 @@ export default function Planejador() {
 
   const handleGenerate = () => {
     if (!input.nicho.trim() || !input.publico.trim()) {
-      toast({ title: "Preencha nicho e público" });
+      toast({ title: "Preencha nicho e pÃºblico" });
       return;
     }
     setIsGenerating(true);
@@ -129,7 +129,7 @@ export default function Planejador() {
           setContextText((prev) => (prev ? prev + "\n\n[PDF " + file.name + "]\n" : "") + readable.slice(0, 8000));
           toast({ title: `PDF importado: ${file.name}` });
         } else {
-          toast({ title: "PDF sem texto extraivel — cole manualmente" });
+          toast({ title: "PDF sem texto extraivel â€” cole manualmente" });
         }
       } catch {
         toast({ title: "Nao foi possivel ler o PDF" });
@@ -189,7 +189,7 @@ export default function Planejador() {
           background-size: 100% 100%, 100% 28px;
           background-position: 72px 0, 0 0;
         }
-        .paper::before {
+        .paper::before { pointer-events:none;
           content:"";
           position:absolute; left:72px; top:0; bottom:0; width:1px; background: rgba(217,119,87,0.18); pointer-events:none;
         }
@@ -201,7 +201,7 @@ export default function Planejador() {
         @media print {
           .no-print { display:none !important; }
           .paper { background: white !important; }
-          .paper::before { display:none; }
+          .paper::before { pointer-events:none; display:none; }
         }
       `}</style>
 
@@ -245,13 +245,13 @@ export default function Planejador() {
 
               <h1 className="font-claude text-[32px] md:text-[40px] leading-[0.95] tracking-tight">
                 Planeje <span className="italic" style={{ color: "#D97757" }}>setembro inteiro</span> numa tarde so.
-                <span className="block text-[16px] md:text-[18px] font-normal opacity-60 mt-2" style={{ fontFamily: "Inter" }}>So ajustar os colchetes e colar na IA que voce ja usa — aqui ja vem pronto em calendario interativo.</span>
+                <span className="block text-[16px] md:text-[18px] font-normal opacity-60 mt-2" style={{ fontFamily: "Inter" }}>So ajustar os colchetes e colar na IA que voce ja usa â€” aqui ja vem pronto em calendario interativo.</span>
               </h1>
 
               <div className="mt-5 rounded-2xl border bg-white overflow-hidden" style={{ borderColor: "#E8E2D6" }}>
                 <div className="px-4 md:px-5 py-3 flex items-center justify-between border-b" style={{ background: "#F9F6F0", borderColor: "#ECE9E1" }}>
                   <span className="font-mono-tech text-[11px] tracking-widest uppercase opacity-70">Prompt testado - setembro 2026</span>
-                  <button onClick={copyPromptTestado} className="font-mono-tech text-xs px-3 py-1 rounded-full border bg-white hover:bg-black hover:text-white transition" style={{ borderColor: "#E8E2D6" }}>Copiar prompt</button>
+                  <button type="button" onClick={copyPromptTestado} className="font-mono-tech text-xs px-3 py-1 rounded-full border bg-white hover:bg-black hover:text-white transition" style={{ borderColor: "#E8E2D6" }}>Copiar prompt</button>
                 </div>
                 <div className="px-4 md:px-5 py-3 font-mono-tech text-[12.5px] leading-6 bg-white">
                   <span className="opacity-60">Aja como estrategista de conteudo especializado em </span><span className="px-1.5 py-0.5 rounded" style={{ background: "#FFF0E6", border: "1px dashed #D97757" }}>[seu nicho]</span><span className="opacity-60">. Meu publico e </span><span className="px-1.5 py-0.5 rounded" style={{ background: "#FFF0E6", border: "1px dashed #D97757" }}>[quem + busca + dor]</span><span className="opacity-60">. Eu ofereco </span><span className="px-1.5 py-0.5 rounded" style={{ background: "#FFF0E6", border: "1px dashed #D97757" }}>[produto]</span><span className="opacity-60"> ...</span>
@@ -286,7 +286,7 @@ export default function Planejador() {
                   <span className="font-mono-tech text-[11px] tracking-widest uppercase opacity-60">[formatos]</span>
                   <div className="mt-1 flex flex-wrap gap-1.5">
                     {(["reels", "carrossel", "stories", "feed", "live"] as Formato[]).map(f => (
-                      <button key={f} onClick={() => setInput({ ...input, formatos: input.formatos.includes(f) ? input.formatos.filter(x => x !== f) : [...input.formatos, f] })} className={`px-3 py-1.5 rounded-full border text-xs font-medium tracking-wide transition ${input.formatos.includes(f) ? "text-white" : "bg-white"}`} style={input.formatos.includes(f) ? { background: "#1A1A1B", borderColor: "#1A1A1B" } : { borderColor: "#E8E2D6" }}>{FORMATO_LABEL[f]}</button>
+                      <button type="button" key={f} onClick={() => setInput({ ...input, formatos: input.formatos.includes(f) ? input.formatos.filter(x => x !== f) : [...input.formatos, f] })} className={`px-3 py-1.5 rounded-full border text-xs font-medium tracking-wide transition ${input.formatos.includes(f) ? "text-white" : "bg-white"}`} style={input.formatos.includes(f) ? { background: "#1A1A1B", borderColor: "#1A1A1B" } : { borderColor: "#E8E2D6" }}>{FORMATO_LABEL[f]}</button>
                     ))}
                   </div>
                 </label>
@@ -301,8 +301,8 @@ export default function Planejador() {
                   <span className="font-mono-tech text-[11px] tracking-widest uppercase opacity-70">Cole texto ou PDF para dar contexto (opcional)</span>
                   <div className="flex gap-2">
                     <input ref={fileInputRef} type="file" accept=".txt,.md,.pdf" onChange={handleFile} className="hidden" />
-                    <button onClick={() => fileInputRef.current?.click()} className="px-3 py-1.5 rounded-full border bg-white text-xs font-medium" style={{ borderColor: "#E8E2D6" }}>Importar PDF/TXT</button>
-                    <button onClick={() => setContextText("")} className="px-3 py-1.5 rounded-full border bg-white text-xs" style={{ borderColor: "#E8E2D6" }}>Limpar</button>
+                    <button type="button" onClick={() => fileInputRef.current?.click()} className="px-3 py-1.5 rounded-full border bg-white text-xs font-medium" style={{ borderColor: "#E8E2D6" }}>Importar PDF/TXT</button>
+                    <button type="button" onClick={() => setContextText("")} className="px-3 py-1.5 rounded-full border bg-white text-xs" style={{ borderColor: "#E8E2D6" }}>Limpar</button>
                   </div>
                 </div>
                 <textarea value={contextText} onChange={e => setContextText(e.target.value)} placeholder="Cole bio, pagina de vendas, transcricao, feedbacks. A IA usa isso para headlines mais especificas." rows={4} className="mt-2 w-full px-3.5 py-2.5 rounded-xl border bg-white outline-none resize-none font-mono-tech text-[13px] leading-5" style={{ borderColor: "#E8E2D6" }} />
@@ -310,10 +310,10 @@ export default function Planejador() {
               </div>
 
               <div className="mt-5 flex flex-wrap gap-2">
-                <button onClick={handleGenerate} disabled={isGenerating} className="px-6 py-3 rounded-full text-white font-semibold shadow-sm hover:opacity-95 active:scale-[0.99] transition disabled:opacity-60 flex items-center gap-2" style={{ background: "#D97757" }}>
+                <button type="button" onClick={handleGenerate} disabled={isGenerating} className="px-6 py-3 rounded-full text-white font-semibold shadow-sm hover:opacity-95 active:scale-[0.99] transition disabled:opacity-60 flex items-center gap-2" style={{ background: "#D97757" }}>
                   {isGenerating ? <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : null} {isGenerating ? "Gerando setembro..." : "Gerar calendario de setembro"}
                 </button>
-                <button onClick={copyPromptTestado} className="px-5 py-3 rounded-full border bg-white font-medium hover:bg-black hover:text-white transition" style={{ borderColor: "#E8E2D6" }}>Copiar prompt com meus dados</button>
+                <button type="button" onClick={copyPromptTestado} className="px-5 py-3 rounded-full border bg-white font-medium hover:bg-black hover:text-white transition" style={{ borderColor: "#E8E2D6" }}>Copiar prompt com meus dados</button>
               </div>
               <div className="font-mono-tech text-[11px] opacity-50 mt-2">Geracao 100% local, sem API externa</div>
             </div>
@@ -367,7 +367,7 @@ export default function Planejador() {
             <div className="w-12 h-12 rounded-2xl mx-auto flex items-center justify-center font-mono-tech text-xs font-bold border" style={{ background: "#F4F1EB", borderColor: "#E8E2D6" }}>SET</div>
             <div className="font-claude text-[26px] mt-3">Seu setembro ainda nao foi gerado</div>
             <div className="opacity-60 mt-1 max-w-[560px] mx-auto">Ajuste os campos acima e clique em Gerar calendario. Em segundos voce tera 30 dias organizados por pilar, formato, tema e headline.</div>
-            <button onClick={handleGenerate} className="mt-5 px-6 py-3 rounded-full text-white font-semibold" style={{ background: "#1A1A1B" }}>Gerar agora</button>
+            <button type="button" onClick={handleGenerate} className="mt-5 px-6 py-3 rounded-full text-white font-semibold" style={{ background: "#1A1A1B" }}>Gerar agora</button>
           </div>
         ) : (
           <>
@@ -375,20 +375,20 @@ export default function Planejador() {
               <h2 className="font-claude text-[28px] leading-none">Setembro <span className="italic" style={{ color: "#D97757" }}>2026</span> <span className="font-mono-tech text-[12px] tracking-widest uppercase opacity-50 ml-2">{result.posts.length} posts - {input.frequencia}x/sem</span></h2>
               <div className="flex flex-wrap items-center gap-2">
                 <div className="flex rounded-full border p-1" style={{ background: "#F4F1EB", borderColor: "#E8E2D6" }}>
-                  <button onClick={() => setView("calendario")} className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${view === "calendario" ? "bg-white shadow-sm border" : "opacity-60"}`} style={view === "calendario" ? { borderColor: "#E8E2D6" } : {}}>Calendario</button>
-                  <button onClick={() => setView("tabela")} className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${view === "tabela" ? "bg-white shadow-sm border" : "opacity-60"}`} style={view === "tabela" ? { borderColor: "#E8E2D6" } : {}}>Tabela</button>
+                  <button type="button" onClick={() => setView("calendario")} className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${view === "calendario" ? "bg-white shadow-sm border" : "opacity-60"}`} style={view === "calendario" ? { borderColor: "#E8E2D6" } : {}}>Calendario</button>
+                  <button type="button" onClick={() => setView("tabela")} className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${view === "tabela" ? "bg-white shadow-sm border" : "opacity-60"}`} style={view === "tabela" ? { borderColor: "#E8E2D6" } : {}}>Tabela</button>
                 </div>
-                <button onClick={copyAll} className="px-3.5 py-2 rounded-full border bg-white text-sm font-medium" style={{ borderColor: "#E8E2D6" }}>Copiar tabela</button>
-                <button onClick={exportCSV} className="px-3.5 py-2 rounded-full border bg-white text-sm font-medium" style={{ borderColor: "#E8E2D6" }}>Baixar CSV</button>
-                <button onClick={printPDF} className="px-3.5 py-2 rounded-full text-white text-sm font-medium" style={{ background: "#1A1A1B" }}>PDF / Imprimir</button>
+                <button type="button" onClick={copyAll} className="px-3.5 py-2 rounded-full border bg-white text-sm font-medium" style={{ borderColor: "#E8E2D6" }}>Copiar tabela</button>
+                <button type="button" onClick={exportCSV} className="px-3.5 py-2 rounded-full border bg-white text-sm font-medium" style={{ borderColor: "#E8E2D6" }}>Baixar CSV</button>
+                <button type="button" onClick={printPDF} className="px-3.5 py-2 rounded-full text-white text-sm font-medium" style={{ background: "#1A1A1B" }}>PDF / Imprimir</button>
               </div>
             </div>
 
             <div className="mt-4 flex flex-wrap gap-1.5 items-center">
               <span className="font-mono-tech text-[11px] tracking-widest uppercase opacity-50 mr-1">Filtrar:</span>
-              <button onClick={() => setFilterPilar("todos")} className={`px-3 py-1.5 rounded-full border text-xs font-medium ${filterPilar === "todos" ? "text-white" : "bg-white"}`} style={filterPilar === "todos" ? { background: "#1A1A1B", borderColor: "#1A1A1B" } : { borderColor: "#E8E2D6" }}>todos</button>
+              <button type="button" onClick={() => setFilterPilar("todos")} className={`px-3 py-1.5 rounded-full border text-xs font-medium ${filterPilar === "todos" ? "text-white" : "bg-white"}`} style={filterPilar === "todos" ? { background: "#1A1A1B", borderColor: "#1A1A1B" } : { borderColor: "#E8E2D6" }}>todos</button>
               {(Object.keys(PILAR_META) as Pilar[]).map(p => (
-                <button key={p} onClick={() => setFilterPilar(p)} className={`px-3 py-1.5 rounded-full border text-xs font-medium ${filterPilar === p ? "border-2" : ""}`} style={filterPilar === p ? { background: PILAR_META[p].bg, borderColor: PILAR_META[p].color, color: PILAR_META[p].color } : { background: "white", borderColor: "#E8E2D6" }}>{PILAR_META[p].label} {p}</button>
+                <button type="button" key={p} onClick={() => setFilterPilar(p)} className={`px-3 py-1.5 rounded-full border text-xs font-medium ${filterPilar === p ? "border-2" : ""}`} style={filterPilar === p ? { background: PILAR_META[p].bg, borderColor: PILAR_META[p].color, color: PILAR_META[p].color } : { background: "white", borderColor: "#E8E2D6" }}>{PILAR_META[p].label} {p}</button>
               ))}
               <span className="font-mono-tech text-[11px] opacity-50 ml-2 hidden md:inline">Clique no card para editar headline e tema</span>
             </div>
@@ -450,7 +450,7 @@ export default function Planejador() {
                         const post = c as Post;
                         const meta = PILAR_META[post.pilar];
                         return (
-                          <button key={idx} onClick={() => setEditing(post)} className="min-h-[132px] border-r border-b p-2 text-left hover:brightness-[0.98] transition flex flex-col gap-1 group" style={{ borderColor: "#ECE9E1", background: "white" }}>
+                          <button type="button" key={idx} onClick={() => setEditing(post)} className="min-h-[132px] border-r border-b p-2 text-left hover:brightness-[0.98] transition flex flex-col gap-1 group" style={{ borderColor: "#ECE9E1", background: "white" }}>
                             <div className="flex items-center justify-between">
                               <span className="font-mono-tech text-[11px] px-1.5 py-0.5 rounded" style={{ background: "#1A1A1B", color: "white" }}>{String(post.dia).padStart(2, "0")}</span>
                               <span className="font-mono-tech text-[10px] px-1.5 py-0.5 rounded-full border truncate" style={{ background: meta.bg, borderColor: meta.color, color: meta.color }}>{meta.label} {post.pilar}</span>
@@ -549,7 +549,7 @@ export default function Planejador() {
               </div>
               <div className="rounded-2xl border p-4 flex items-center gap-3" style={{ background: "#1A1A1B", borderColor: "#1A1A1B", color: "white" }}>
                 <div className="text-sm leading-tight"><b>Pronto para colar na IA?</b><br /><span className="opacity-70 font-mono-tech text-xs">Use o botao Copiar prompt no topo.</span></div>
-                <button onClick={copyPromptTestado} className="ml-auto px-4 py-2 rounded-full bg-white text-black text-xs font-semibold whitespace-nowrap">Copiar</button>
+                <button type="button" onClick={copyPromptTestado} className="ml-auto px-4 py-2 rounded-full bg-white text-black text-xs font-semibold whitespace-nowrap">Copiar</button>
               </div>
             </div>
           </>
@@ -565,7 +565,7 @@ export default function Planejador() {
                 <div className="font-mono-tech text-[11px] tracking-widest uppercase opacity-60">Editando - {editing.data} - {editing.diaSemana}</div>
                 <div className="font-claude text-[20px] leading-none">Refine este post <span className="italic" style={{ color: "#D97757" }}>sem refazer o mes</span></div>
               </div>
-              <button onClick={() => setEditing(null)} className="w-9 h-9 rounded-full border bg-white flex items-center justify-center" style={{ borderColor: "#E8E2D6" }}>X</button>
+              <button type="button" onClick={() => setEditing(null)} className="w-9 h-9 rounded-full border bg-white flex items-center justify-center" style={{ borderColor: "#E8E2D6" }}>X</button>
             </div>
             <div className="p-5 md:p-6 space-y-4">
               <div className="grid grid-cols-2 gap-3">
@@ -601,8 +601,8 @@ export default function Planejador() {
                 </label>
               </div>
               <div className="flex gap-2 pt-2">
-                <button onClick={() => { updatePost(editing); setEditing(null); toast({ title: "Post atualizado" }); }} className="flex-1 py-3 rounded-full text-white font-semibold" style={{ background: "#D97757" }}>Salvar alteracoes</button>
-                <button onClick={() => { navigator.clipboard.writeText(`${editing.headline}\n\n${editing.legendaHook}\n\n${editing.cta}`); toast({ title: "Copiado" }); }} className="px-5 py-3 rounded-full border bg-white font-medium" style={{ borderColor: "#E8E2D6" }}>Copiar</button>
+                <button type="button" onClick={() => { updatePost(editing); setEditing(null); toast({ title: "Post atualizado" }); }} className="flex-1 py-3 rounded-full text-white font-semibold" style={{ background: "#D97757" }}>Salvar alteracoes</button>
+                <button type="button" onClick={() => { navigator.clipboard.writeText(`${editing.headline}\n\n${editing.legendaHook}\n\n${editing.cta}`); toast({ title: "Copiado" }); }} className="px-5 py-3 rounded-full border bg-white font-medium" style={{ borderColor: "#E8E2D6" }}>Copiar</button>
               </div>
             </div>
           </div>
@@ -615,3 +615,4 @@ export default function Planejador() {
     </div>
   );
 }
+
