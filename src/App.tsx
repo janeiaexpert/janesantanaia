@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Admin from "./pages/Admin";
 import Agenda from "./pages/Agenda";
 import ResetPassword from "./pages/ResetPassword";
+import Planejador from "./pages/Planejador";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -19,6 +20,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/planejador" element={<Planejador />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/agenda" element={<Agenda />} />
           <Route path="/reset-password" element={<ResetPassword />} />
