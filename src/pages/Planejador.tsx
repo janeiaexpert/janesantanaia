@@ -1,4 +1,4 @@
-﻿import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { generateCalendar, PILAR_META, FORMATO_LABEL, type PlannerInput, type Pilar, type Formato, type Post, type CalendarResult } from "@/lib/plannerEngine";
 import { toast } from "@/hooks/use-toast";
 
@@ -6,8 +6,8 @@ const STORAGE_KEY = "planner_setembro_2026_v3";
 
 const defaultInput: PlannerInput = {
   nicho: "marketing digital para iniciantes",
-  publico: "mulheres 25-40 anos que querem viver do digital, buscam liberdade e tÃªm dor de nÃ£o saber por onde comeÃ§ar",
-  dor: "falta de constÃ¢ncia e medo de aparecer",
+  publico: "mulheres 25-40 anos que querem viver do digital, buscam liberdade e têm dor de não saber por onde começar",
+  dor: "falta de constância e medo de aparecer",
   produto: "mentoria Desbloqueie seu Digital",
   frequencia: 5,
   formatos: ["reels", "carrossel", "stories"],
@@ -18,8 +18,8 @@ const defaultInput: PlannerInput = {
 // Trilha / stepper
 function Trilha({ step }: { step: number }) {
   const steps = [
-    { n: 1, title: "Definir", desc: "nicho e pÃºblico" },
-    { n: 2, title: "Gerar", desc: "calendÃ¡rio set" },
+    { n: 1, title: "Definir", desc: "nicho e público" },
+    { n: 2, title: "Gerar", desc: "calendário set" },
     { n: 3, title: "Revisar", desc: "editar headlines" },
     { n: 4, title: "Exportar", desc: "CSV / PDF" },
   ];
@@ -88,7 +88,7 @@ export default function Planejador() {
       const hasBasics = input.nicho.trim() && input.publico.trim();
       return hasBasics ? 1 : 1;
     }
-    // se tem resultado mas ainda nÃ£o editou, estÃ¡ no passo 3
+    // se tem resultado mas ainda não editou, está no passo 3
     return 3;
   }, [input.nicho, input.publico, result]);
 
@@ -98,7 +98,7 @@ export default function Planejador() {
 
   const handleGenerate = () => {
     if (!input.nicho.trim() || !input.publico.trim()) {
-      toast({ title: "Preencha nicho e pÃºblico" });
+      toast({ title: "Preencha nicho e público" });
       return;
     }
     setIsGenerating(true);
@@ -129,7 +129,7 @@ export default function Planejador() {
           setContextText((prev) => (prev ? prev + "\n\n[PDF " + file.name + "]\n" : "") + readable.slice(0, 8000));
           toast({ title: `PDF importado: ${file.name}` });
         } else {
-          toast({ title: "PDF sem texto extraivel â€” cole manualmente" });
+          toast({ title: "PDF sem texto extraivel — cole manualmente" });
         }
       } catch {
         toast({ title: "Nao foi possivel ler o PDF" });
@@ -189,7 +189,7 @@ export default function Planejador() {
           background-size: 100% 100%, 100% 28px;
           background-position: 72px 0, 0 0;
         }
-        .paper::before { pointer-events:none;
+        .paper::before {
           content:"";
           position:absolute; left:72px; top:0; bottom:0; width:1px; background: rgba(217,119,87,0.18); pointer-events:none;
         }
@@ -201,7 +201,7 @@ export default function Planejador() {
         @media print {
           .no-print { display:none !important; }
           .paper { background: white !important; }
-          .paper::before { pointer-events:none; display:none; }
+          .paper::before { display:none; }
         }
       `}</style>
 
@@ -245,7 +245,7 @@ export default function Planejador() {
 
               <h1 className="font-claude text-[32px] md:text-[40px] leading-[0.95] tracking-tight">
                 Planeje <span className="italic" style={{ color: "#D97757" }}>setembro inteiro</span> numa tarde so.
-                <span className="block text-[16px] md:text-[18px] font-normal opacity-60 mt-2" style={{ fontFamily: "Inter" }}>So ajustar os colchetes e colar na IA que voce ja usa â€” aqui ja vem pronto em calendario interativo.</span>
+                <span className="block text-[16px] md:text-[18px] font-normal opacity-60 mt-2" style={{ fontFamily: "Inter" }}>So ajustar os colchetes e colar na IA que voce ja usa — aqui ja vem pronto em calendario interativo.</span>
               </h1>
 
               <div className="mt-5 rounded-2xl border bg-white overflow-hidden" style={{ borderColor: "#E8E2D6" }}>
@@ -388,7 +388,7 @@ export default function Planejador() {
               <span className="font-mono-tech text-[11px] tracking-widest uppercase opacity-50 mr-1">Filtrar:</span>
               <button type="button" onClick={() => setFilterPilar("todos")} className={`px-3 py-1.5 rounded-full border text-xs font-medium ${filterPilar === "todos" ? "text-white" : "bg-white"}`} style={filterPilar === "todos" ? { background: "#1A1A1B", borderColor: "#1A1A1B" } : { borderColor: "#E8E2D6" }}>todos</button>
               {(Object.keys(PILAR_META) as Pilar[]).map(p => (
-                <button type="button" key={p} onClick={() => setFilterPilar(p)} className={`px-3 py-1.5 rounded-full border text-xs font-medium ${filterPilar === p ? "border-2" : ""}`} style={filterPilar === p ? { background: PILAR_META[p].bg, borderColor: PILAR_META[p].color, color: PILAR_META[p].color } : { background: "white", borderColor: "#E8E2D6" }}>{PILAR_META[p].label} {p}</button>
+                <button key={p} onClick={() => setFilterPilar(p)} className={`px-3 py-1.5 rounded-full border text-xs font-medium ${filterPilar === p ? "border-2" : ""}`} style={filterPilar === p ? { background: PILAR_META[p].bg, borderColor: PILAR_META[p].color, color: PILAR_META[p].color } : { background: "white", borderColor: "#E8E2D6" }}>{PILAR_META[p].label} {p}</button>
               ))}
               <span className="font-mono-tech text-[11px] opacity-50 ml-2 hidden md:inline">Clique no card para editar headline e tema</span>
             </div>
@@ -450,7 +450,7 @@ export default function Planejador() {
                         const post = c as Post;
                         const meta = PILAR_META[post.pilar];
                         return (
-                          <button type="button" key={idx} onClick={() => setEditing(post)} className="min-h-[132px] border-r border-b p-2 text-left hover:brightness-[0.98] transition flex flex-col gap-1 group" style={{ borderColor: "#ECE9E1", background: "white" }}>
+                          <button key={idx} onClick={() => setEditing(post)} className="min-h-[132px] border-r border-b p-2 text-left hover:brightness-[0.98] transition flex flex-col gap-1 group" style={{ borderColor: "#ECE9E1", background: "white" }}>
                             <div className="flex items-center justify-between">
                               <span className="font-mono-tech text-[11px] px-1.5 py-0.5 rounded" style={{ background: "#1A1A1B", color: "white" }}>{String(post.dia).padStart(2, "0")}</span>
                               <span className="font-mono-tech text-[10px] px-1.5 py-0.5 rounded-full border truncate" style={{ background: meta.bg, borderColor: meta.color, color: meta.color }}>{meta.label} {post.pilar}</span>
@@ -615,4 +615,3 @@ export default function Planejador() {
     </div>
   );
 }
-
