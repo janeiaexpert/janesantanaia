@@ -121,13 +121,6 @@ return (
         {/* Links Section */}
         <nav className="w-full flex flex-col gap-4 mt-4">
           <a
-            href="/planejador"
-            className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl font-semibold text-white shadow-sm hover:scale-[1.01] transition"
-            style={{ background: "#D97757" }}
-          >
-            ✺ Planejador de Conteúdo — Setembro 2026
-          </a>
-          <a
             href="/agenda"
             className="btn-gradient w-full flex items-center justify-center gap-2"
           >

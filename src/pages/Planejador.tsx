@@ -176,32 +176,23 @@ export default function Planejador() {
   };
 
   return (
-    <div className="min-h-screen text-[15px] leading-relaxed" style={{ background: "#FDFCF9", color: "#1A1A1B" }}>
+    <div className="min-h-screen text-[15px] leading-relaxed" style={{ background: "#D97757", color: "#1A1A1B" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap');
         .font-claude { font-family: "Instrument Serif", Georgia, serif; }
         .font-mono-tech { font-family: "IBM Plex Mono", monospace; }
         .paper {
-          background-color: #FDFCF9;
-          background-image:
-            linear-gradient(to right, rgba(217,119,87,0.16) 1px, transparent 1px),
-            linear-gradient(rgba(26,26,27,0.04) 1px, transparent 1px);
-          background-size: 100% 100%, 100% 28px;
-          background-position: 72px 0, 0 0;
+          background: #D97757;
         }
-        .paper::before {
-          content:"";
-          position:absolute; left:72px; top:0; bottom:0; width:1px; background: rgba(217,119,87,0.18); pointer-events:none;
-        }
+        .paper::before { display:none; }
         .hole {
           width: 16px; height: 16px; border-radius: 50%;
-          background: #EAE8E3; box-shadow: inset 0 1.5px 3px rgba(0,0,0,0.14);
-          border: 1px solid rgba(0,0,0,0.06);
+          background: rgba(255,255,255,0.9); box-shadow: inset 0 1.5px 3px rgba(0,0,0,0.14);
+          border: 1px solid rgba(0,0,0,0.08);
         }
         @media print {
           .no-print { display:none !important; }
           .paper { background: white !important; }
-          .paper::before { display:none; }
         }
       `}</style>
 
