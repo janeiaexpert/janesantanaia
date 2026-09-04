@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 1200px; height: 630px; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; }
+.container {
+  width: 1200px; height: 630px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.content {
+  display: flex; align-items: center; gap: 60px; padding: 0 80px;
+}
+.photo {
+  width: 280px; height: 280px; border-radius: 50%;
+  border: 4px solid rgba(212, 175, 55, 0.6);
+  object-fit: cover; flex-shrink: 0;
+}
+.info { color: white; max-width: 600px; }
+.name {
+  font-size: 48px; font-weight: 700; color: #d4af37;
+  margin-bottom: 12px; letter-spacing: 1px;
+}
+.role {
+  font-size: 22px; color: #e0e0e0; margin-bottom: 8px;
+  font-weight: 400;
+}
+.title {
+  font-size: 26px; color: #ffffff; font-weight: 600;
+  margin-bottom: 20px;
+}
+.tags {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.tag {
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: #d4af37; padding: 8px 16px; border-radius: 20px;
+  font-size: 14px; font-weight: 500;
+}
+.glow {
+  position: absolute; width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
+  top: -100px; right: -50px; border-radius: 50%;
+}
+.glow2 {
+  position: absolute; width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(15,52,96,0.3) 0%, transparent 70%);
+  bottom: -100px; left: -50px; border-radius: 50%;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="glow"></div>
+  <div class="glow2"></div>
+  <div class="content">
+    <img class="photo" src="https://mentorajanesantana.vercel.app/avatar-jane.png" alt="Jane Santana" />
+    <div class="info">
+      <div class="name">JANE SANTANA</div>
+      <div class="role">Consultora Master em IA</div>
+      <div class="title">Mentoria e Consultoria em Inteligência Artificial</div>
+      <div class="tags">
+        <span class="tag">Estratégia</span>
+        <span class="tag">Inteligência</span>
+        <span class="tag">Resultados</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
