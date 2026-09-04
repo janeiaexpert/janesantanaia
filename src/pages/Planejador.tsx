@@ -15,36 +15,36 @@ const defaultInput: PlannerInput = {
   contextoExtra: "",
 };
 
-// Trilha / stepper
+// Trilha / stepper - responsivo
 function Trilha({ step }: { step: number }) {
   const steps = [
     { n: 1, title: "Definir", desc: "nicho e público" },
     { n: 2, title: "Gerar", desc: "calendário set" },
-    { n: 3, title: "Revisar", desc: "editar headlines" },
+    { n: 3, title: "Revisar", desc: "editar" },
     { n: 4, title: "Exportar", desc: "CSV / PDF" },
   ];
   return (
     <div className="w-full border rounded-2xl bg-white overflow-hidden" style={{ borderColor: "#E8E2D6" }}>
-      <div className="px-4 md:px-5 py-3 flex items-center justify-between gap-2">
+      <div className="px-3 sm:px-4 md:px-5 py-3 flex items-center justify-between gap-2">
         <span className="font-mono-tech text-[11px] tracking-[0.14em] uppercase opacity-60">Trilha</span>
         <span className="font-mono-tech text-[11px] opacity-50">Passo {step} de 4</span>
       </div>
-      <div className="px-4 md:px-5 pb-4">
-        <div className="flex items-center gap-0">
+      <div className="px-2 sm:px-4 md:px-5 pb-4 overflow-x-auto scrollbar-none">
+        <div className="flex items-center gap-0 min-w-[460px] sm:min-w-0">
           {steps.map((s, idx) => {
             const active = step >= s.n;
             const current = step === s.n;
             return (
-              <div key={s.n} className="flex items-center flex-1">
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border shrink-0" style={active ? { background: current ? "#D97757" : "#1A1A1B", color: "white", borderColor: current ? "#D97757" : "#1A1A1B" } : { background: "white", borderColor: "#E8E2D6", color: "#9AA0A6" }}>{s.n}</div>
-                  <div className="hidden sm:block leading-none">
-                    <div className={`text-[13px] font-semibold ${active ? "text-[#1A1A1B]" : "text-[#9AA0A6]"}`}>{s.title}</div>
-                    <div className="font-mono-tech text-[11px] opacity-60">{s.desc}</div>
+              <div key={s.n} className="flex items-center flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-bold border shrink-0" style={active ? { background: current ? "#D97757" : "#1A1A1B", color: "white", borderColor: current ? "#D97757" : "#1A1A1B" } : { background: "white", borderColor: "#E8E2D6", color: "#9AA0A6" }}>{s.n}</div>
+                  <div className="leading-none min-w-0">
+                    <div className={`text-[12px] sm:text-[13px] font-semibold truncate ${active ? "text-[#1A1A1B]" : "text-[#9AA0A6]"}`}>{s.title}</div>
+                    <div className="font-mono-tech text-[10px] sm:text-[11px] opacity-60 truncate hidden xs:block">{s.desc}</div>
                   </div>
                 </div>
                 {idx < steps.length - 1 && (
-                  <div className="flex-1 h-[2px] mx-2 md:mx-3 rounded" style={{ background: step > s.n ? "#1A1A1B" : "#E8E2D6" }} />
+                  <div className="flex-1 h-[2px] mx-1.5 sm:mx-2 md:mx-3 rounded shrink-0" style={{ background: step > s.n ? "#1A1A1B" : "#E8E2D6" }} />
                 )}
               </div>
             );
@@ -197,30 +197,30 @@ export default function Planejador() {
       `}</style>
 
       <header className="sticky top-0 z-30 backdrop-blur-xl border-b no-print" style={{ background: "rgba(253,252,249,0.92)", borderColor: "#ECE9E1" }}>
-        <div className="max-w-[1420px] mx-auto px-4 md:px-6 h-[58px] flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center text-white text-[13px] font-bold tracking-widest" style={{ background: "#D97757" }}>JS</div>
-            <div>
-              <div className="font-claude text-[19px] leading-none tracking-tight">Planejador <span className="italic font-normal" style={{ color: "#D97757" }}>de Conteudo</span></div>
-              <div className="font-mono-tech text-[11px] tracking-widest uppercase opacity-60 -mt-[2px]">Setembro 2026 - Instagram - 4 Pilares</div>
+        <div className="max-w-[1420px] mx-auto px-3 sm:px-4 md:px-6 h-[54px] sm:h-[58px] flex items-center justify-between gap-2 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center text-white text-[12px] sm:text-[13px] font-bold tracking-widest shrink-0" style={{ background: "#D97757" }}>JS</div>
+            <div className="min-w-0">
+              <div className="font-claude text-[16px] sm:text-[19px] leading-none tracking-tight truncate">Planejador <span className="italic font-normal" style={{ color: "#D97757" }}>de Conteudo</span></div>
+              <div className="font-mono-tech text-[10px] sm:text-[11px] tracking-widest uppercase opacity-60 -mt-[1px] truncate">Setembro 2026 - Instagram - 4 Pilares</div>
             </div>
           </div>
-          <div className="hidden md:flex items-center gap-2 font-mono-tech text-xs">
+          <div className="hidden md:flex items-center gap-2 font-mono-tech text-xs shrink-0">
             <span className="px-2.5 py-1 rounded-full border" style={{ background: "#F4F1EB", borderColor: "#E8E2D6" }}>Ao vivo - sem cadastro</span>
             <a href="/" className="px-3 py-1.5 rounded-full text-white font-medium" style={{ background: "#1A1A1B" }}>Voltar ao site</a>
           </div>
-          <a href="/" className="md:hidden px-3 py-1.5 rounded-full text-white text-xs font-medium" style={{ background: "#1A1A1B" }}>Voltar</a>
+          <a href="/" className="md:hidden px-2.5 py-1.5 rounded-full text-white text-[11px] font-medium shrink-0" style={{ background: "#1A1A1B" }}>Voltar</a>
         </div>
       </header>
 
       <section className="relative paper border-b no-print" style={{ borderColor: "#ECE9E1" }}>
-        <div className="max-w-[1420px] mx-auto px-4 md:px-6 py-6 md:py-8 relative">
+        <div className="max-w-[1420px] mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8 relative">
           {/* Trilha no topo */}
-          <div className="mb-6">
+          <div className="mb-4 sm:mb-6">
             <Trilha step={step} />
           </div>
 
-          <div className="grid grid-cols-12 gap-5 md:gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 md:gap-6">
             <div className="hidden lg:flex col-span-1 flex-col items-center gap-5 pt-2">
               <div className="flex flex-col gap-4">
                 {Array.from({ length: 7 }).map((_, i) => <div key={i} className="hole" />)}
@@ -234,9 +234,9 @@ export default function Planejador() {
                 <span className="font-mono-tech text-[11px] opacity-50 hidden sm:inline">Preencha sua realidade e gere o mes em 1 clique</span>
               </div>
 
-              <h1 className="font-claude text-[32px] md:text-[40px] leading-[0.95] tracking-tight">
+              <h1 className="font-claude text-[26px] sm:text-[32px] md:text-[40px] leading-[0.95] tracking-tight">
                 Planeje <span className="italic" style={{ color: "#D97757" }}>setembro inteiro</span> numa tarde so.
-                <span className="block text-[16px] md:text-[18px] font-normal opacity-60 mt-2" style={{ fontFamily: "Inter" }}>So ajustar os colchetes e colar na IA que voce ja usa — aqui ja vem pronto em calendario interativo.</span>
+                <span className="block text-[14px] sm:text-[16px] md:text-[18px] font-normal opacity-60 mt-2" style={{ fontFamily: "Inter" }}>So ajustar os colchetes e colar na IA que voce ja usa — aqui ja vem pronto em calendario interativo.</span>
               </h1>
 
               <div className="mt-5 rounded-2xl border bg-white overflow-hidden" style={{ borderColor: "#E8E2D6" }}>
@@ -300,17 +300,17 @@ export default function Planejador() {
                 <div className="font-mono-tech text-[11px] opacity-50 mt-1">{contextText.length} caracteres - salvo automaticamente</div>
               </div>
 
-              <div className="mt-5 flex flex-wrap gap-2">
-                <button type="button" onClick={handleGenerate} disabled={isGenerating} className="px-6 py-3 rounded-full text-white font-semibold shadow-sm hover:opacity-95 active:scale-[0.99] transition disabled:opacity-60 flex items-center gap-2" style={{ background: "#D97757" }}>
+              <div className="mt-5 flex flex-col sm:flex-row gap-2 sm:gap-2">
+                <button type="button" onClick={handleGenerate} disabled={isGenerating} className="w-full sm:w-auto px-6 py-3.5 sm:py-3 rounded-full text-white font-semibold shadow-sm hover:opacity-95 active:scale-[0.99] transition disabled:opacity-60 flex items-center justify-center gap-2 text-[15px] sm:text-[15px]" style={{ background: "#D97757" }}>
                   {isGenerating ? <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : null} {isGenerating ? "Gerando setembro..." : "Gerar calendario de setembro"}
                 </button>
-                <button type="button" onClick={copyPromptTestado} className="px-5 py-3 rounded-full border bg-white font-medium hover:bg-black hover:text-white transition" style={{ borderColor: "#E8E2D6" }}>Copiar prompt com meus dados</button>
+                <button type="button" onClick={copyPromptTestado} className="w-full sm:w-auto px-5 py-3 rounded-full border bg-white font-medium hover:bg-black hover:text-white transition text-center" style={{ borderColor: "#E8E2D6" }}>Copiar prompt com meus dados</button>
               </div>
               <div className="font-mono-tech text-[11px] opacity-50 mt-2">Geracao 100% local, sem API externa</div>
             </div>
 
             <div className="col-span-12 lg:col-span-4">
-              <div className="rounded-[20px] border bg-white overflow-hidden sticky top-[70px]" style={{ borderColor: "#E8E2D6" }}>
+              <div className="rounded-[20px] border bg-white overflow-hidden lg:sticky lg:top-[70px]" style={{ borderColor: "#E8E2D6" }}>
                 <div className="h-1.5" style={{ background: "#D97757" }} />
                 <div className="p-5">
                   <div className="font-mono-tech text-[11px] tracking-widest uppercase opacity-50">Preview - como fica a entrega</div>
@@ -352,7 +352,7 @@ export default function Planejador() {
         </div>
       </section>
 
-      <section id="calendario-anchor" className="max-w-[1420px] mx-auto px-4 md:px-6 py-6 md:py-8">
+      <section id="calendario-anchor" className="max-w-[1420px] mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8">
         {!result ? (
           <div className="rounded-[24px] border-2 border-dashed p-8 md:p-12 text-center" style={{ borderColor: "#E8E2D6", background: "#FFFEFB" }}>
             <div className="w-12 h-12 rounded-2xl mx-auto flex items-center justify-center font-mono-tech text-xs font-bold border" style={{ background: "#F4F1EB", borderColor: "#E8E2D6" }}>SET</div>
@@ -362,16 +362,16 @@ export default function Planejador() {
           </div>
         ) : (
           <>
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <h2 className="font-claude text-[28px] leading-none">Setembro <span className="italic" style={{ color: "#D97757" }}>2026</span> <span className="font-mono-tech text-[12px] tracking-widest uppercase opacity-50 ml-2">{result.posts.length} posts - {input.frequencia}x/sem</span></h2>
-              <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center justify-between gap-3">
+              <h2 className="font-claude text-[24px] sm:text-[28px] leading-none">Setembro <span className="italic" style={{ color: "#D97757" }}>2026</span> <span className="block sm:inline font-mono-tech text-[11px] sm:text-[12px] tracking-widest uppercase opacity-50 sm:ml-2 mt-1 sm:mt-0">{result.posts.length} posts - {input.frequencia}x/sem</span></h2>
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                 <div className="flex rounded-full border p-1" style={{ background: "#F4F1EB", borderColor: "#E8E2D6" }}>
-                  <button type="button" onClick={() => setView("calendario")} className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${view === "calendario" ? "bg-white shadow-sm border" : "opacity-60"}`} style={view === "calendario" ? { borderColor: "#E8E2D6" } : {}}>Calendario</button>
-                  <button type="button" onClick={() => setView("tabela")} className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${view === "tabela" ? "bg-white shadow-sm border" : "opacity-60"}`} style={view === "tabela" ? { borderColor: "#E8E2D6" } : {}}>Tabela</button>
+                  <button type="button" onClick={() => setView("calendario")} className={`px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium transition ${view === "calendario" ? "bg-white shadow-sm border" : "opacity-60"}`} style={view === "calendario" ? { borderColor: "#E8E2D6" } : {}}>Calendario</button>
+                  <button type="button" onClick={() => setView("tabela")} className={`px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium transition ${view === "tabela" ? "bg-white shadow-sm border" : "opacity-60"}`} style={view === "tabela" ? { borderColor: "#E8E2D6" } : {}}>Tabela</button>
                 </div>
-                <button type="button" onClick={copyAll} className="px-3.5 py-2 rounded-full border bg-white text-sm font-medium" style={{ borderColor: "#E8E2D6" }}>Copiar tabela</button>
-                <button type="button" onClick={exportCSV} className="px-3.5 py-2 rounded-full border bg-white text-sm font-medium" style={{ borderColor: "#E8E2D6" }}>Baixar CSV</button>
-                <button type="button" onClick={printPDF} className="px-3.5 py-2 rounded-full text-white text-sm font-medium" style={{ background: "#1A1A1B" }}>PDF / Imprimir</button>
+                <button type="button" onClick={copyAll} className="px-2.5 sm:px-3.5 py-2 rounded-full border bg-white text-xs sm:text-sm font-medium" style={{ borderColor: "#E8E2D6" }}>Copiar</button>
+                <button type="button" onClick={exportCSV} className="px-2.5 sm:px-3.5 py-2 rounded-full border bg-white text-xs sm:text-sm font-medium" style={{ borderColor: "#E8E2D6" }}>CSV</button>
+                <button type="button" onClick={printPDF} className="px-2.5 sm:px-3.5 py-2 rounded-full text-white text-xs sm:text-sm font-medium" style={{ background: "#1A1A1B" }}>PDF</button>
               </div>
             </div>
 
@@ -406,9 +406,11 @@ export default function Planejador() {
 
             {view === "calendario" && (
               <div className="mt-6 rounded-[20px] border bg-white overflow-hidden shadow-sm" style={{ borderColor: "#E8E2D6" }}>
-                <div className="grid grid-cols-7 border-b font-mono-tech text-[11px] tracking-widest uppercase text-center" style={{ background: "#F9F6F0", borderColor: "#ECE9E1" }}>
-                  {["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"].map(d => <div key={d} className="py-2.5 border-r last:border-r-0" style={{ borderColor: "#ECE9E1" }}>{d}</div>)}
-                </div>
+                <div className="overflow-x-auto -mx-3 sm:mx-0">
+                  <div className="min-w-[640px]">
+                    <div className="grid grid-cols-7 border-b font-mono-tech text-[11px] tracking-widest uppercase text-center" style={{ background: "#F9F6F0", borderColor: "#ECE9E1" }}>
+                      {["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"].map(d => <div key={d} className="py-2.5 border-r last:border-r-0" style={{ borderColor: "#ECE9E1" }}>{d}</div>)}
+                    </div>
                 {(() => {
                   const year = 2026, month = 8;
                   const firstWd = new Date(year, month, 1).getDay();
@@ -456,7 +458,9 @@ export default function Planejador() {
                     </div>
                   );
                 })()}
-                <div className="px-4 py-2.5 flex flex-wrap gap-2 items-center justify-between font-mono-tech text-[11px]" style={{ background: "#F9F6F0", borderTop: "1px solid #ECE9E1" }}>
+                  </div>
+                </div>
+                <div className="px-3 sm:px-4 py-2.5 flex flex-wrap gap-2 items-center justify-between font-mono-tech text-[11px]" style={{ background: "#F9F6F0", borderTop: "1px solid #ECE9E1" }}>
                   <span className="opacity-60">Dica: posts em ter/qui/sab tem boost de alcance. Reels para atracao, Carrossel para autoridade.</span>
                   <span className="flex gap-1.5 items-center"><span className="w-2 h-2 rounded-full" style={{ background: "#0e7490" }} /> atracao <span className="w-2 h-2 rounded-full ml-2" style={{ background: "#1d4ed8" }} /> autoridade <span className="w-2 h-2 rounded-full ml-2" style={{ background: "#be123c" }} /> conexao <span className="w-2 h-2 rounded-full ml-2" style={{ background: "#15803d" }} /> conversao</span>
                 </div>
