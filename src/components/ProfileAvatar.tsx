@@ -14,9 +14,8 @@ const sizes = {
 const ProfileAvatar = ({ size = "lg", onClick, className = "", src }: ProfileAvatarProps) => {
   return (
     <div
-      className={`cursor-pointer shrink-0 flex items-center justify-center ${className}`}
+      className={`cursor-pointer shrink-0 flex items-center justify-center overflow-hidden rounded-full ${sizes[size]} ${className}`}
       onClick={onClick}
-      style={{ width: "auto", height: "auto" }}
     >
       <img
         src={src || "/avatar-jane.png"}
@@ -24,8 +23,7 @@ const ProfileAvatar = ({ size = "lg", onClick, className = "", src }: ProfileAva
         loading="eager"
         decoding="sync"
         fetchPriority="high"
-        className="rounded-full object-contain"
-        style={{ width: "100%", height: "100%", maxWidth: size === "lg" ? "180px" : size === "md" ? "120px" : "80px", maxHeight: size === "lg" ? "180px" : size === "md" ? "120px" : "80px" }}
+        className="w-full h-full rounded-full object-cover"
         onError={(e) => {
           (e.target as HTMLImageElement).src = "/avatar-jane.png";
         }}
