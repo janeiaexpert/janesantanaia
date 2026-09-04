@@ -302,7 +302,7 @@ const Agenda = () => {
               </p>
             )}
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="px-4 sm:px-6 pb-6 space-y-4">
             <div className="space-y-1">
               <Label>Data</Label>
               <Input
@@ -318,7 +318,7 @@ const Agenda = () => {
             ) : (
               <div className="space-y-2">
                 <Label className="flex items-center gap-2"><Clock className="w-4 h-4" /> Horários disponíveis</Label>
-                <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
                   {slots.map((s) => {
                     const taken = unavailable.has(s);
                     const isSelected = selectedTime === s;
@@ -329,7 +329,7 @@ const Agenda = () => {
                         disabled={taken}
                         aria-pressed={isSelected}
                         onClick={() => setSelectedTime(s)}
-                        className={`px-3 py-2 rounded-md border text-sm transition-colors ${
+                        className={`px-2 py-2.5 rounded-md border text-sm font-medium transition-colors ${
                           taken
                             ? "bg-muted text-muted-foreground line-through cursor-not-allowed opacity-60"
                             : isSelected
@@ -359,17 +359,17 @@ const Agenda = () => {
           <CardHeader>
             <CardTitle className="text-lg">Seus dados</CardTitle>
           </CardHeader>
-          <CardContent>
-            <form className="space-y-3" onSubmit={handleSubmit}>
-              <div className="space-y-1">
+          <CardContent className="px-4 sm:px-6 pb-6">
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <div className="space-y-1.5">
                 <Label>Nome completo *</Label>
                 <Input value={form.client_name} onChange={(e) => setForm({ ...form, client_name: e.target.value })} required maxLength={100} />
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <Label>WhatsApp / Telefone *</Label>
                 <Input value={form.client_phone} onChange={(e) => setForm({ ...form, client_phone: e.target.value })} required maxLength={20} placeholder="(00) 00000-0000" />
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <Label>Email *</Label>
                 <Input
                   type="email"
@@ -379,7 +379,7 @@ const Agenda = () => {
                   maxLength={150}
                 />
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <Label>Observações (opcional)</Label>
                 <Textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={3} maxLength={500} />
               </div>
