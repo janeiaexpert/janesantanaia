@@ -731,9 +731,9 @@ const Admin = () => {
                           >
                             Remover
                           </Button>
-                        </div>
+</div>
                       </div>
-                  </CardContent>
+                    </CardContent>
                 </Card>
 
                 {/* Cores */}
