@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/planejador", "destination": "https://planejador-app-six.vercel.app", "permanent": true },
+    { "source": "/planejador/:path*", "destination": "https://planejador-app-six.vercel.app/:path*", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
