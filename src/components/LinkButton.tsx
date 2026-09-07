@@ -26,7 +26,7 @@ const LinkButton = ({ title, url, icon }: LinkButtonProps) => {
         />
         <Globe className="w-5 h-5 text-muted-foreground hidden" />
       </span>
-      <span className="text-foreground text-sm sm:text-base font-medium flex-1">{title}</span>
+      <span className="text-foreground text-sm sm:text-base font-medium flex-1 min-w-0 break-words text-left">{title}</span>
       <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
     </a>
   );

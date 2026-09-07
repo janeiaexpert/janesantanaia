@@ -307,6 +307,7 @@ const Agenda = () => {
               <Label>Data</Label>
               <Input
                 type="date"
+                className="min-w-0 w-full"
                 value={selectedDate}
                 min={minDate}
                 onChange={(e) => setSelectedDate(e.target.value)}

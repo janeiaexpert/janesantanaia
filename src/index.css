@@ -252,6 +252,22 @@
   outline-offset: 3px;
 }
 
+/* Fix iOS native date/time inputs overflowing their container on small screens */
+input[type="date"],
+input[type="time"] {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="date"]::-webkit-date-and-time-value,
+input[type="time"]::-webkit-date-and-time-value {
+  text-align: left;
+  margin: 0;
+}
+
 
 /* ═══════════════════════════════════════════════════════════════
    FLOATING PARTICLES BACKGROUND
