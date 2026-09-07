@@ -190,7 +190,7 @@ const AgendaAdmin = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="space-y-1 min-w-0">
                 <Label className="text-xs sm:text-sm">Abertura</Label>
                 <Input className="min-w-0 w-full" type="time" value={settings.opening_time.slice(0, 5)} onChange={(e) => setSettings({ ...settings, opening_time: e.target.value + ":00" })} />
@@ -249,9 +249,9 @@ const AgendaAdmin = () => {
               <div key={a.id} className="p-4 bg-muted rounded-lg space-y-2">
                 {editingId === a.id ? (
                   <div className="space-y-2">
-                    <div className="grid grid-cols-2 gap-2">
-                      <Input type="date" value={editDate} onChange={(e) => setEditDate(e.target.value)} />
-                      <Input type="time" value={editTime} onChange={(e) => setEditTime(e.target.value)} />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <Input className="min-w-0 w-full" type="date" value={editDate} onChange={(e) => setEditDate(e.target.value)} />
+                      <Input className="min-w-0 w-full" type="time" value={editTime} onChange={(e) => setEditTime(e.target.value)} />
                     </div>
                     <div className="flex gap-2">
                       <Button size="sm" onClick={saveReschedule}>Salvar nova data</Button>
