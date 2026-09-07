@@ -190,18 +190,18 @@ const AgendaAdmin = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <div className="space-y-1">
+            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-3">
+              <div className="space-y-1 min-w-0">
                 <Label className="text-xs sm:text-sm">Abertura</Label>
-                <Input type="time" value={settings.opening_time.slice(0, 5)} onChange={(e) => setSettings({ ...settings, opening_time: e.target.value + ":00" })} />
+                <Input className="min-w-0 w-full" type="time" value={settings.opening_time.slice(0, 5)} onChange={(e) => setSettings({ ...settings, opening_time: e.target.value + ":00" })} />
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1 min-w-0">
                 <Label className="text-xs sm:text-sm">Fechamento</Label>
-                <Input type="time" value={settings.closing_time.slice(0, 5)} onChange={(e) => setSettings({ ...settings, closing_time: e.target.value + ":00" })} />
+                <Input className="min-w-0 w-full" type="time" value={settings.closing_time.slice(0, 5)} onChange={(e) => setSettings({ ...settings, closing_time: e.target.value + ":00" })} />
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1 min-w-0">
                 <Label className="text-xs sm:text-sm">Duração (min)</Label>
-                <Input type="number" min={10} max={240} step={5} value={settings.slot_duration_minutes} onChange={(e) => setSettings({ ...settings, slot_duration_minutes: parseInt(e.target.value) || 60 })} />
+                <Input className="min-w-0 w-full" type="number" min={10} max={240} step={5} value={settings.slot_duration_minutes} onChange={(e) => setSettings({ ...settings, slot_duration_minutes: parseInt(e.target.value) || 60 })} />
               </div>
             </div>
 
